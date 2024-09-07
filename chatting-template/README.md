@@ -1,3 +1,5 @@
+[<- Home](/)
+
 # Chatting Template
 [Template](./template.json)
 
