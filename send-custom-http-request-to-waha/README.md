@@ -1,5 +1,5 @@
 # Send Custom HTTP Request to WAHA API
-[Template](https://raw.githubusercontent.com/devlikeapro/n8n-nodes-waha/master/n8n-workflows/send-custom-http-request-to-waha/template.json)
+[Template](./template.json)
 
 ![](workflow.png)
 
