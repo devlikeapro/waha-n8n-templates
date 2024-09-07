@@ -38,3 +38,11 @@ You can import the workflows:
 - [Send Custom HTTP Request to WAHA API](./send-custom-http-request-to-waha)  - Example how to send custom HTTP request to WAHA API
 - [Restart server at midnight](./restart-server-at-midnight) - Restart server at midnight
 - [WAHA Trigger Explanation](./waha-trigger-explanation) - Explanation of **WAHA Trigger** node
+
+
+# Contribute
+
+Have an idea or looking for a new template? 
+Feel free to create new [**Issue** or **PR**](https://github.com/devlikeapro/waha-n8n-templates/pulls) 🙏
+
+
