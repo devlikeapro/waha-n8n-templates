@@ -1,0 +1,256 @@
+{
+  "name": "WAHA - Send QR to Email",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data",
+        "binaryPropertyName": "screenshot",
+        "options": {
+          "mimeType": "={{ $json['mimetype'] }}"
+        }
+      },
+      "id": "05513103-49fc-4324-80ea-5e86b61f3272",
+      "name": "Convert to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        4300,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "f827f7f8-d40c-4d97-9677-9e62d99c7e7a",
+              "leftValue": "={{ $json.payload.status }}",
+              "rightValue": "SCAN_QR_CODE",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a875adae-ae13-409a-936f-05943b8638fe",
+      "name": "status=SCAN_QR_CODE",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        3760,
+        1100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "92ee6e06-2f59-428f-b635-67c935d56284",
+              "name": "session",
+              "value": "={{ $json.session }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9d0acdb6-ed53-4191-aa1d-28f6ecd9c5ba",
+      "name": "Session",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3960,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Send QR to Email",
+        "height": 436.00729838273105,
+        "width": 973.2347646532487,
+        "color": 4
+      },
+      "id": "69f1523c-7531-4366-a67a-c8f448bfa62a",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3700,
+        920
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b9c7abc4-5585-4365-b035-df78bebe7376",
+      "name": "WAHA Trigger",
+      "type": "@devlikeapro/n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202409,
+      "position": [
+        3340,
+        1120
+      ],
+      "webhookId": "71251449-2644-4325-8ba7-2a1550a81fb4"
+    },
+    {
+      "parameters": {},
+      "id": "05c95ad9-f154-41ad-84ee-5b7e04a94e2b",
+      "name": "Do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3960,
+        1180
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Auth",
+        "operation": "Get QR",
+        "requestOptions": {}
+      },
+      "id": "e4109b0e-d665-40ed-baa4-e6db9671603e",
+      "name": "Get QR",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        4140,
+        1000
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## WAHA Webhook\nRemember to configure you WAHA session **webhooks** to send proper event to **Webhook URL** from **WAHA Trigger** node",
+        "height": 629.9407047373624,
+        "width": 327.12752630406015,
+        "color": 6
+      },
+      "id": "b894c64d-9d07-4ed1-a060-f6e7ec78b651",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3260,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "portal@devlike.pro",
+        "toEmail": "waha@devlike.pro",
+        "subject": "=WAHA [{{ $('Session').item.json.session }}] - Your QR code to authorize WhatsApp ",
+        "html": "Kindly scan it ASAP:\n<br><br>\n<img src=\"cid:screenshot\">",
+        "options": {
+          "attachments": "screenshot"
+        }
+      },
+      "id": "e122f717-b94d-4a10-be90-7a36e8832342",
+      "name": "Send QR Code to Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        4480,
+        1000
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "Ldb0TArg4PMPd9Gm",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Send QR Code to Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "status=SCAN_QR_CODE": {
+      "main": [
+        [
+          {
+            "node": "Session",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Session": {
+      "main": [
+        [
+          {
+            "node": "Get QR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA Trigger": {
+      "main": [
+        [
+          {
+            "node": "status=SCAN_QR_CODE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get QR": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "da57b883-1e14-4500-8437-873327ed4f0c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "2Sb5oH67p0V8RvRe",
+  "tags": []
+}

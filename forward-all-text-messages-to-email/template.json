@@ -1,0 +1,98 @@
+{
+  "name": "WAHA - Forward all text Messages to Email",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "21a4aa35-88d3-4fc5-8f5a-ad6bef3a8310",
+      "name": "WAHA Trigger",
+      "type": "@devlikeapro/n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202409,
+      "position": [
+        1380,
+        860
+      ],
+      "webhookId": "c886730e-328b-4d51-93c8-10a19f1252fd"
+    },
+    {
+      "parameters": {
+        "content": "## WAHA Webhook\nRemember to configure you WAHA session **webhooks** to send proper event to **Webhook URL** from **WAHA Trigger** node",
+        "height": 629.9407047373624,
+        "width": 327.12752630406015,
+        "color": 6
+      },
+      "id": "705c4fce-1095-4793-a960-e0f4735bf595",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "portal@devlike.pro",
+        "toEmail": "waha@devlike.pro",
+        "subject": "=WAHA [{{ $json.session }}] - You have new message in WhatsApp! ",
+        "html": "=From: {{ $json.payload.from }}\n<br>\nTo: {{ $json.payload.to || $json.me.id }}\n<br>\nText: {{ $json.payload.body }}",
+        "options": {}
+      },
+      "id": "2c29e16d-0902-4729-a37c-2bd59dd6bcd3",
+      "name": "Send Text Message",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1920,
+        860
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "Ldb0TArg4PMPd9Gm",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Send Text to Email",
+        "height": 320.11218397325257,
+        "width": 313.52411339929284,
+        "color": 4
+      },
+      "id": "633fbb09-783b-435d-ad80-f36dbfd28099",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        760
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Send Text Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0e01defb-f25f-4684-b5a9-6d6e7390c825",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "EHRybG7McjLIxQvC",
+  "tags": []
+}

@@ -1,0 +1,273 @@
+{
+  "name": "WAHA - Custom HTTP API Request",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "052ad79c-4c69-41fe-baf5-b6e609f663ca",
+      "name": "WAHA Trigger",
+      "type": "@devlikeapro/n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202409,
+      "position": [
+        1380,
+        860
+      ],
+      "webhookId": "71251449-2644-4325-8ba7-2a1550a81fb4"
+    },
+    {
+      "parameters": {
+        "content": "## Send Video via HTTP Request on \"video\"",
+        "height": 339.6993458980035,
+        "width": 568.1572184210546,
+        "color": 4
+      },
+      "id": "14f98332-6f28-4c2c-b882-6a427e1e6194",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:3000/api/sendVideo",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wahaApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"session\": \"{{ $json.session }}\",\n  \"chatId\": \"{{ $json.payload.from }}\",\n  \"caption\": \"Watch this video!\",\n  \"file\": {\n    \"mimetype\": \"video/mp4\",\n    \"filename\": \"video.mp4\",\n    \"url\": \"https://github.com/devlikeapro/waha/raw/core/examples/video.mp4\"\n  }\n}",
+        "options": {}
+      },
+      "id": "d1bbf9fd-3bd7-45c4-9665-6ae9f390cbbe",
+      "name": "HTTP Request - WAHA Send Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2140,
+        1060
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "f827f7f8-d40c-4d97-9677-9e62d99c7e7a",
+              "leftValue": "={{ $json.payload.body }}",
+              "rightValue": "video",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "9dc60cdc-5d7b-44ab-b959-3cec77632855",
+              "leftValue": "={{ $json.payload.body }}",
+              "rightValue": "Video",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "1701bb42-15f9-434d-a75e-9bbf070f94ae",
+      "name": "body=video",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        1900,
+        1080
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## WAHA Webhook\nRemember to configure you WAHA session **webhooks** to send proper event to **Webhook URL** from **WAHA Trigger** node",
+        "height": 629.9407047373624,
+        "width": 327.12752630406015,
+        "color": 6
+      },
+      "id": "780a037f-fdd3-434c-b4cc-b8c681849fa1",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        740
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "participant": "",
+        "requestOptions": {}
+      },
+      "id": "500719c0-6e93-47a1-9934-41b92e35aae6",
+      "name": "Send Seen",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        1880,
+        760
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Always Send Seen",
+        "height": 256.1783237728081,
+        "width": 568.1572184210546,
+        "color": 4
+      },
+      "id": "96e3f315-eb23-4bc2-8bef-1be19527b86d",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        680
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "true",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "242f1ea8-0d3f-491c-a60b-1ac78c82488f",
+                    "leftValue": "true",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "61abde5f-ea26-4d3c-b91c-d3c31699c8c5",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        1680,
+        940
+      ],
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "body=video": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - WAHA Send Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "body=video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fc2c2d33-ec22-4e50-9072-59ba91d6f195",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "BSEwZv3oXVUm1vVL",
+  "tags": []
+}

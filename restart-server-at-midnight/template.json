@@ -1,0 +1,68 @@
+{
+  "name": "WAHA - Restart Server at midnight",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "e2e42d07-a5b2-4b82-87a0-4e9961ef21e1",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        460,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Observability",
+        "operation": "Stop",
+        "requestOptions": {}
+      },
+      "id": "9002e037-ea7a-4a5d-86ca-f7466cbd2842",
+      "name": "Restart WAHA",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        720,
+        540
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Restart WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "19dc68bf-683a-47b2-bb0b-e213b0ea0b10",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "sBS45UNs7TvWK7sp",
+  "tags": []
+}
