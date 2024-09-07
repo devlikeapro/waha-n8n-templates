@@ -1,3 +1,5 @@
+[<- Back To Gallery](/)
+
 # Send QR code for authorization to Email
 [Template](./template.json)
 

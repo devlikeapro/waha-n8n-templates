@@ -1,3 +1,5 @@
+[<- Back To Gallery](/)
+
 # WAHA Trigger Explanation
 [Template](./template.json)
 

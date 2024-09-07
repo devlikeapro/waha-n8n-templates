@@ -1,3 +1,5 @@
+[<- Back To Gallery](/)
+
 # Restart server at midnight
 [Template](./template.json)
 
