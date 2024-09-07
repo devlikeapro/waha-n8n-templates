@@ -1,4 +1,5 @@
-# N8N WAHA Workflows Examples
+# WAHA n8n Templates Gallery
+
 You can import the workflows:
 1. Go to your n8n installation with installed **WAHA** node.
 2. **Add workflow** there (just empty one)
