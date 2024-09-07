@@ -1,5 +1,19 @@
 # WAHA n8n Templates Gallery
 
+<p align="center">
+  <img src="./WAHA+n8n.png" width='300'/>
+</p>
+
+Templates for [WAHA - WhatsApp HTTP API](https://waha.devlike.pro) and [n8n](https://n8n.io/) workflows using
+[@devlikeapro/n8n-nodes-waha](https://github.com/devlikeapro/n8n-nodes-waha) 
+node.
+- [WAHA](https://waha.devlike.pro) - **WhatsApp API** that you can run in a click!
+- [@devlikeapro/n8n-nodes-waha](https://github.com/devlikeapro/n8n-nodes-waha) 
+- [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
+
+
+# How to use the templates
+
 You can import the workflows:
 1. Go to your n8n installation with installed **WAHA** node.
 2. **Add workflow** there (just empty one)
@@ -13,6 +27,7 @@ You can import the workflows:
 
 
 # Workflows Templates
+![](chatting-template/workflow.png)
 
 👉 Checkout folders for more templates!
 
