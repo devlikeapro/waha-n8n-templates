@@ -7,11 +7,9 @@
 Templates for [WAHA - WhatsApp HTTP API](https://waha.devlike.pro) and [n8n](https://n8n.io/) workflows using
 [@devlikeapro/n8n-nodes-waha](https://github.com/devlikeapro/n8n-nodes-waha) 
 node.
-- [🧩 WAHA + n8n Integration](https://waha.devlike.pro/docs/integrations/n8n/)
-- [@devlikeapro/n8n-nodes-waha](https://github.com/devlikeapro/n8n-nodes-waha) 
-- [WAHA](https://waha.devlike.pro) - **WhatsApp API** that you can run in a click! 
-- [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
+- [**WAHA + n8n: No Code Low Code WhatsApp Automation Step-By-Step Guide**](http://localhost:1313/blog/waha-n8n/#install-waha-n8n-node)
+- [**🧩 WAHA + n8n Integration**](https://waha.devlike.pro/docs/integrations/n8n/)
 
 # How to use the templates
 
