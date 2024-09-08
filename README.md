@@ -25,9 +25,6 @@ node.
 <!-- tocstop -->
 
 # How to use the templates
-
-You can import the workflows:
-
 1. Go to your **n8n** with installed **@devlikeapro/n8n-nodes-waha** node.
 2. **Add new workflow**
 3. Import one of the **templates** with either:
