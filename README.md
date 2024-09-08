@@ -15,9 +15,9 @@ node.
 
 - [How to use the templates](#how-to-use-the-templates)
 - [Workflows Templates](#workflows-templates)
-  * [Chatting Template](#chatting-template)
-  * [Send QR code for authorization to Email](#send-qr-code-for-authorization-to-email)
-  * [Forward all text messages to email](#forward-all-text-messages-to-email)
+  * [WhatsApp Bot](#whatsapp-bot)
+  * [Send WhatsApp QR code for authorization to Email](#send-whatsapp-qr-code-for-authorization-to-email)
+  * [Forward WhatsApp text messages to email](#forward-whatsapp-text-messages-to-email)
   * [Send custom HTTP request to WAHA API](#send-custom-http-request-to-waha-api)
   * [Other Templates](#other-templates)
 - [Contribute](#contribute)
@@ -34,7 +34,7 @@ node.
 
 # Workflows Templates
 
-## [Chatting Template](/chatting-template)
+## [WhatsApp Bot](/chatting-template)
 
 <p align="center">
     <img 
@@ -46,7 +46,7 @@ node.
 Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"** and sends Image if received
 **"image"**.
 
-## [Send QR code for authorization to Email](./send-qr-code-to-email)
+## [Send WhatsApp QR code for authorization to Email](./send-qr-code-to-email)
 
 <p align="center">
     <img 
@@ -57,7 +57,7 @@ Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"**
 
 Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
 
-## [Forward all text messages to email](./forward-all-text-messages-to-email)
+## [Forward WhatsApp text messages to email](./forward-all-text-messages-to-email)
 <p align="center">
     <img 
         src="./forward-all-text-messages-to-email/workflow.png"
