@@ -31,6 +31,7 @@ node.
     1. **Copy & Paste** the template JSON
     2. **Import from URL** and paste the URL of the template JSON
 4. Follow the **Set up steps** in the template README
+5. Adjust the workflow to your needs
 
 # Workflows Templates
 
