@@ -15,7 +15,7 @@ node.
 
 You can import the workflows:
 1. Go to your **n8n** with installed **@devlikeapro/n8n-nodes-waha** node.
-2. **Add workflow** 
+2. **Add new workflow** 
 3. Import one of the **templates** with either:
    1. **Copy & Paste** the template JSON
    2. **Import from URL** and paste the URL of the template JSON
