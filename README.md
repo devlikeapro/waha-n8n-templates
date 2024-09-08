@@ -18,6 +18,8 @@ node.
 - [Workflows Templates](#workflows-templates)
   * [Chatting Template](#chatting-template)
   * [Send QR code for authorization to Email](#send-qr-code-for-authorization-to-email)
+  * [Forward all text messages to email](#forward-all-text-messages-to-email)
+  * [Send custom HTTP request to WAHA API](#send-custom-http-request-to-waha-api)
   * [Other Templates](#other-templates)
 - [Contribute](#contribute)
 
@@ -59,12 +61,27 @@ Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"**
 
 Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
 
-## Other Templates
+## [Forward all text messages to email](./forward-all-text-messages-to-email)
+<p align="center">
+    <img 
+        src="./forward-all-text-messages-to-email/workflow.png"
+        height=400
+    />
+</p>
 
-- [Forward text messages from WhatsApp to Email](./forward-all-text-messages-to-email) -
-  Receive and forward all text messages from WhatsApp to Email
-- [Send Custom HTTP Request to WAHA API](./send-custom-http-request-to-waha)  - Example how to send custom HTTP request
-  to WAHA API
+Forward all WhatsApp incoming text messages to the Email.
+
+## [Send custom HTTP request to WAHA API](./send-custom-http-request-to-waha)
+<p align="center">
+    <img 
+        src="./send-custom-http-request-to-waha/workflow.png"
+        height=400
+    />
+</p>
+
+Template how to send custom HTTP request to WAHA API. It sends video message on incoming message with text "video".
+
+## Other Templates
 - [Restart server at midnight](./restart-server-at-midnight) - Restart server at midnight
 - [WAHA Trigger Explanation](./waha-trigger-explanation) - Explanation of **WAHA Trigger** node
 
