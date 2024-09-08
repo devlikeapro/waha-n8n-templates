@@ -8,7 +8,7 @@ Templates for [WAHA - WhatsApp HTTP API](https://waha.devlike.pro) and [n8n](htt
 [@devlikeapro/n8n-nodes-waha](https://github.com/devlikeapro/n8n-nodes-waha)
 node.
 
-- [**WAHA + n8n: No Code Low Code WhatsApp Automation Step-By-Step Guide**](http://localhost:1313/blog/waha-n8n/#install-waha-n8n-node)
+- [**WAHA + n8n: No Code Low Code WhatsApp Automation Step-By-Step Guide**](https://waha.devlike.pro/blog/waha-n8n/)
 - [**🧩 WAHA + n8n Integration**](https://waha.devlike.pro/docs/integrations/n8n/)
 
 <!-- toc -->
