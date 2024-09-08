@@ -1,4 +1,4 @@
-# WAHA n8n Templates Gallery
+# WAHA n8n Workflow Templates
 
 <p align="center">
   <img src="./WAHA+n8n.png" width='300'/>

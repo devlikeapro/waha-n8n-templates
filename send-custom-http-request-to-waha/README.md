@@ -1,4 +1,4 @@
-[<- Back To Gallery](/)
+[<- Back](/)
 
 # Send Custom HTTP Request to WAHA API
 [Template](./template.json)

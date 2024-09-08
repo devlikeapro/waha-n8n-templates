@@ -1,4 +1,4 @@
-[<- Back To Gallery](/)
+[<- Back](/)
 
 # Restart server at midnight
 [Template](./template.json)

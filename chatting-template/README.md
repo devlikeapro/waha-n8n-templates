@@ -1,4 +1,4 @@
-[<- Back To Gallery](/)
+[<- Back](/)
 
 # Chatting Template
 [Template](./template.json)
