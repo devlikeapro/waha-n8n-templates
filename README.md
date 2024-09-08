@@ -11,6 +11,17 @@ node.
 - [**WAHA + n8n: No Code Low Code WhatsApp Automation Step-By-Step Guide**](http://localhost:1313/blog/waha-n8n/#install-waha-n8n-node)
 - [**🧩 WAHA + n8n Integration**](https://waha.devlike.pro/docs/integrations/n8n/)
 
+<!-- toc -->
+
+- [How to use the templates](#how-to-use-the-templates)
+- [Workflows Templates](#workflows-templates)
+  * [Chatting Template](#chatting-template)
+  * [Send QR code for authorization to Email](#send-qr-code-for-authorization-to-email)
+  * [Other](#other)
+- [Contribute](#contribute)
+
+<!-- tocstop -->
+
 # How to use the templates
 
 You can import the workflows:
@@ -22,15 +33,6 @@ You can import the workflows:
 4. Follow the **Set up steps** in the template README
 
 # Workflows Templates
-
-<!-- toc -->
-
-  * [Chatting Template](#chatting-template)
-  * [Send QR code for authorization to Email](#send-qr-code-for-authorization-to-email)
-  * [Other](#other)
-- [Contribute](#contribute)
-
-<!-- tocstop -->
 
 ## [Chatting Template](/chatting-template)
 
