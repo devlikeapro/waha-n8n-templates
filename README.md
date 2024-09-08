@@ -24,8 +24,6 @@ You can import the workflows:
 # Workflows Templates
 ![](chatting-template/workflow.png)
 
-👉 Checkout folders for more templates!
-
 - [WhatsApp Chatting Template](./chatting-template) - Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"** and sends Image if received **"image"**.
 - [Send WhatsApp QR code to Email](./send-qr-code-to-email) - Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
 - [Forward text messages from WhatsApp to Email](./forward-all-text-messages-to-email) - Receive and forward all text messages from WhatsApp to Email
