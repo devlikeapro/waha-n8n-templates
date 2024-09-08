@@ -22,10 +22,29 @@ You can import the workflows:
 4. Follow the **Set up steps** in the template README
 
 # Workflows Templates
+
+<!-- toc -->
+
+  * [Chatting Template](#chatting-template)
+  * [Send QR code for authorization to Email](#send-qr-code-for-authorization-to-email)
+  * [Other](#other)
+- [Contribute](#contribute)
+
+<!-- tocstop -->
+
+## [Chatting Template](/chatting-template)
+
 ![](chatting-template/workflow.png)
 
-- [WhatsApp Chatting Template](./chatting-template) - Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"** and sends Image if received **"image"**.
-- [Send WhatsApp QR code to Email](./send-qr-code-to-email) - Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
+Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"** and sends Image if received **"image"**.
+
+## [Send QR code for authorization to Email](./send-qr-code-to-email)
+
+![](send-qr-code-to-email/workflow.png)
+
+Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
+
+## Other
 - [Forward text messages from WhatsApp to Email](./forward-all-text-messages-to-email) - Receive and forward all text messages from WhatsApp to Email
 - [Send Custom HTTP Request to WAHA API](./send-custom-http-request-to-waha)  - Example how to send custom HTTP request to WAHA API
 - [Restart server at midnight](./restart-server-at-midnight) - Restart server at midnight
