@@ -14,16 +14,12 @@ node.
 # How to use the templates
 
 You can import the workflows:
-1. Go to your n8n installation with installed **WAHA** node.
-2. **Add workflow** there (just empty one)
-3. Import one of the **templates** by clicking on three dots **...** at the right top corner
-	 of the n8n window and selecting **Import from URL**.
-4. Paste the url to import workflow
-5. Select credentials for all WAHA nodes
-6. Configure you session to send event to **WAHA Trigger** Webhook URL
-7. Activate the workflow
-8. Enjoy low-code automation!
-
+1. Go to your **n8n** with installed **@devlikeapro/n8n-nodes-waha** node.
+2. **Add workflow** 
+3. Import one of the **templates** with either:
+   1. **Copy & Paste** the template JSON
+   2. **Import from URL** and paste the URL of the template JSON
+4. Follow the **Set up steps** in the template README
 
 # Workflows Templates
 ![](chatting-template/workflow.png)
