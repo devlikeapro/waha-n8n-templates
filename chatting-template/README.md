@@ -1,7 +1,7 @@
 [<- Back](/)
 
-# Chatting Template
-[Template](./template.json)
+# WhatsApp Bot Template
+[**template.json**](./template.json)
 
 ![](workflow.png)
 

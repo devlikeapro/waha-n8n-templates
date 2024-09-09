@@ -1,7 +1,7 @@
 [<- Back](/)
 
 # Forward all text messages to email
-[Template](./template.json)
+[**template.json**](./template.json)
 
 ![](workflow.png)
 

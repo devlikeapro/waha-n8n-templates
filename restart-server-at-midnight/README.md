@@ -1,7 +1,7 @@
 [<- Back](/)
 
 # Restart server at midnight
-[Template](./template.json)
+[**template.json**](./template.json)
 
 ![](workflow.png)
 

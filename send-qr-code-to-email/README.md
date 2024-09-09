@@ -1,7 +1,7 @@
 [<- Back](/)
 
 # Send QR code for authorization to Email
-[Template](./template.json)
+[**template.json**](./template.json)
 
 ![](workflow.png)
 

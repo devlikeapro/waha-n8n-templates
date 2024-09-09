@@ -1,7 +1,7 @@
 [<- Back](/)
 
 # Send Custom HTTP Request to WAHA API
-[Template](./template.json)
+[**template.json**](./template.json)
 
 ![](workflow.png)
 

@@ -1,7 +1,7 @@
 [<- Back](/)
 
 # WAHA Trigger Explanation
-[Template](./template.json)
+[**template.json**](./template.json)
 
 ![](workflow.png)
 
