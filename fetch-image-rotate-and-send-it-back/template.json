@@ -1,0 +1,345 @@
+{
+  "name": "WAHA - Fetch Image, Rotate and Send it back",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "490960e8-c5de-463b-b3d4-06b52e083666",
+      "name": "WAHA Trigger",
+      "type": "@devlikeapro/n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202409,
+      "position": [
+        780,
+        300
+      ],
+      "webhookId": "11aaf679-af01-4c01-8f8a-95dceb1dc6a8"
+    },
+    {
+      "parameters": {
+        "operation": "rotate",
+        "rotate": 180,
+        "options": {}
+      },
+      "id": "6d9f620e-cd68-49a6-9194-d76871f10b8f",
+      "name": "Edit Image",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "f827f7f8-d40c-4d97-9677-9e62d99c7e7a",
+              "leftValue": "={{ $json.payload.media.mimetype }}",
+              "rightValue": "image/jpeg",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "9dc60cdc-5d7b-44ab-b959-3cec77632855",
+              "leftValue": "={{ $json.payload.media.url }}",
+              "rightValue": "Ping",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "81f9e561-fc6c-4252-a3e5-eda72d940bcb",
+      "name": "If media is image",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "5208c3dd-2d7d-4f1e-9bab-1b0447b64e34",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.payload.media.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wahaApi",
+        "options": {
+          "response": {}
+        }
+      },
+      "id": "9f462bc9-0fb7-4354-b919-d245f57f8e5a",
+      "name": "Download Media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1420,
+        300
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Image",
+        "file": "={\n  \"mimetype\": \"image/jpeg\",\n  \"filename\": \"filename.jpg\",\n  \"data\": \"{{ $json.data }}\"\n}",
+        "caption": "Upside Down",
+        "requestOptions": {}
+      },
+      "id": "e2d515a2-324d-4d00-88c0-c9c88e8491d7",
+      "name": "WAHA",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        1840,
+        300
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {
+          "keepSource": "json"
+        }
+      },
+      "id": "4d18e975-798a-449b-a865-f34a30f89d28",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Fetch Image, Rotate and Send it back",
+        "height": 549.0093616885703,
+        "width": 982.9044680440325,
+        "color": 4
+      },
+      "id": "d3fd323f-41b9-41b2-aa2b-be305b69f4bb",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1009.9280118639065,
+        98.10282228468225
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "participant": "",
+        "requestOptions": {}
+      },
+      "id": "2a010fa6-dd63-4c96-b445-d6e53da9c9ac",
+      "name": "Send Seen",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        1440,
+        140
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "true",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "242f1ea8-0d3f-491c-a60b-1ac78c82488f",
+                    "leftValue": "true",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "812f0131-3b0b-4ca6-83b5-ce813c74655a",
+      "name": "Run All",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        1240,
+        280
+      ],
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If media is image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If media is image": {
+      "main": [
+        [
+          {
+            "node": "Run All",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Media": {
+      "main": [
+        [
+          {
+            "node": "Edit Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run All": {
+      "main": [
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9964f8c1-5fc2-4578-ab57-a1b3e53cb468",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "eH6G9cMgrst0QjuE",
+  "tags": []
+}
