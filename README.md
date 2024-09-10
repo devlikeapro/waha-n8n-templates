@@ -18,6 +18,7 @@ node.
   * [WhatsApp Bot](#whatsapp-bot)
   * [Send WhatsApp QR code for authorization to Email](#send-whatsapp-qr-code-for-authorization-to-email)
   * [Forward WhatsApp text messages to email](#forward-whatsapp-text-messages-to-email)
+  * [Fetch image, Rotate and Send it back](#fetch-image-rotate-and-send-it-back)
   * [Send custom HTTP request to WAHA API](#send-custom-http-request-to-waha-api)
   * [Other Templates](#other-templates)
 - [Contribute](#contribute)
@@ -67,6 +68,14 @@ Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
 </p>
 
 Forward all WhatsApp incoming text messages to the Email.
+
+## [Fetch image, Rotate and Send it back](./fetch-image-rotate-and-send-it-back)
+<p align="center">
+    <img 
+        src="./fetch-image-rotate-and-send-it-back/workflow.png"
+        height=400
+    />
+</p>
 
 ## [Send custom HTTP request to WAHA API](./send-custom-http-request-to-waha)
 <p align="center">
