@@ -40,7 +40,7 @@ curl -X POST -H "Content-Type: application/json" -d '[
         "text": "Hi there!",
         "phone": "123123"
     }
-]' https://localhost:5000/webhook/11111111-111111-1111-1111-d2ac95896744/messages/default/bulk
+]' https://localhost:5000/webhook/11111111-111111-1111-1111-d2ac95896744/messages/{SESSION}/bulk
 ```
 
 It'll send the message to the phone numbers and at the end send an email, 
