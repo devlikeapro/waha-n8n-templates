@@ -17,6 +17,7 @@ node.
 - [Workflows Templates](#workflows-templates)
   * [WhatsApp Bot](#whatsapp-bot)
   * [Send WhatsApp QR code for authorization to Email](#send-whatsapp-qr-code-for-authorization-to-email)
+  * [Send Bulk Messages API](#send-bulk-messages-api)
   * [Forward WhatsApp text messages to email](#forward-whatsapp-text-messages-to-email)
   * [Fetch image, Rotate and Send it back](#fetch-image-rotate-and-send-it-back)
   * [Send custom HTTP request to WAHA API](#send-custom-http-request-to-waha-api)
@@ -58,6 +59,16 @@ Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"**
 </p>
 
 Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
+
+## [Send Bulk Messages API](./send-bulk-messages)
+<p align="center">
+    <img 
+        src="./send-bulk-messages/workflow.png"
+        height=400
+    />
+</p>
+
+Forward all WhatsApp incoming text messages to the Email.
 
 ## [Forward WhatsApp text messages to email](./forward-all-text-messages-to-email)
 <p align="center">

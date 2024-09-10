@@ -15,5 +15,5 @@ When receive a new message on WhatsApp session - send "video" message back (mark
 - Configure **WAHA API** credentials and select it for all WAHA nodes
 - **Active** your workflow in n8n
 - Get **Webhook URL** (production one) from **WAHA Trigger** node
-- Configure you **WAHA session** to send webhooks with `message` type to the **Webhook URL**
+- Configure your **WAHA session** to send webhooks with `message` type to the **Webhook URL**
 - Send "video" to the WhatsApp account from another one and see the magic!

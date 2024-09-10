@@ -16,6 +16,6 @@ Receive all text messages and forward them to the email.
 - Configure **Email** node with your **from** and **to** email (requires **SMTP credentials** as well)
 - **Active** your workflow in n8n
 - Get **Webhook URL** (production one) from **WAHA Trigger** node
-- Configure you **WAHA session** to send webhooks with `message` type to the **Webhook URL**
+- Configure your **WAHA session** to send webhooks with `message` type to the **Webhook URL**
 - Send any message
 - and see the message in your email!

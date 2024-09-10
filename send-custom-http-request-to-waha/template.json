@@ -99,7 +99,7 @@
     },
     {
       "parameters": {
-        "content": "## WAHA Webhook\nRemember to configure you WAHA session **webhooks** to send proper event to **Webhook URL** from **WAHA Trigger** node",
+        "content": "## WAHA Webhook\nRemember to Configure your WAHA session **webhooks** to send proper event to **Webhook URL** from **WAHA Trigger** node",
         "height": 629.9407047373624,
         "width": 327.12752630406015,
         "color": 6

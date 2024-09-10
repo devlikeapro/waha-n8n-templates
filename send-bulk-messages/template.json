@@ -1,0 +1,752 @@
+{
+  "name": "WAHA - Bulk Message Send",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE IF NOT EXISTS queue (\n    id SERIAL PRIMARY KEY,\n    session VARCHAR(50),\n    text TEXT NOT NULL,\n    phone VARCHAR(50),\n    messageId VARCHAR(50),\n    status VARCHAR(50)\n);",
+        "options": {}
+      },
+      "id": "af16c0da-c302-4d8b-983c-3d69e12f7260",
+      "name": "Create \"queue\" table",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1520,
+        -360
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "5d1f4864-3a5e-4f81-9793-00cf276a30de",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1800,
+        320
+      ],
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fromEmail": "portal@devlike.pro",
+        "toEmail": "waha@devlike.pro",
+        "subject": "=WAHA [{{ $('POST :session/bulk').item.json.params.session }}] Bulk Message Finished",
+        "options": {}
+      },
+      "id": "54d6de82-d969-4525-a631-b268ef38f5e4",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2040,
+        20
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "smtp": {
+          "id": "Ldb0TArg4PMPd9Gm",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Migration - Run it ONCE\nThe action creates database table that bulk messaging uses\n\n### Schema\n- `id`: pk\n- `session` - session you're sending from\n- `text` - text you're sending\n- `phone` - phone number you're sending message to\n- `messageId` - message id from WhatsApp\n- `status`\n  - `QUEUED` - message will be processed\n  - `SENT` - message has been sent\n  - `ERROR` - message hasn't been sent due to error\n\n",
+        "height": 489.64267820574844,
+        "width": 578.5030826949118
+      },
+      "id": "9c6d9e5d-2d37-4450-9d77-e432fb3cd5ec",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -680
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7008b227-563d-4eb7-a55d-edf258a38269",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -360
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Send Message in Loop\nYou can adjust the workflow to your need, add more data, fields, and notifications",
+        "height": 753.6743758037387,
+        "width": 1346.80079001387,
+        "color": 4
+      },
+      "id": "16cbf883-303f-4798-807d-7491e6943579",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1745.3053051221111,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body",
+        "options": {}
+      },
+      "id": "a29f80a7-d13f-41c9-a839-0572de98ffce",
+      "name": "Split Out Messages",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        960,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## POST /webhook/{WEBHOOK_URL/messages/{session}/bulk\nSend POST request here (make sure to get actually **Webhook URL** from **Webhook** node)\n\n### Curl Example\ncurl -X POST -H \"Content-Type: application/json\" -d '[\n    {\n        \"text\": \"Hi there!\",\n        \"phone\": \"123123\"\n    },\n    {\n        \"text\": \"Hi there!\",\n        \"phone\": \"123123\"\n    }\n]' https://localhost:5000/webhook/11111111-111111-1111-1111-d2ac95896744/messages/default/bulk",
+        "height": 753.6743758037387,
+        "width": 1091.3418023303166,
+        "color": 4
+      },
+      "id": "462db2a8-bbf5-4618-8d19-9daa62a70749",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "messages/:session/bulk",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "2b8616f9-d24b-4c1a-bf5d-91dfa048c2ea",
+      "name": "POST :session/bulk",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        720,
+        320
+      ],
+      "webhookId": "80c4de91-af8d-4db0-acef-d2ac95896744"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "9b174d7b-e0c3-4016-9185-066c6427a928",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1580,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Start Typing",
+        "chatId": "={{ $json.phone }}@c.us",
+        "requestOptions": {}
+      },
+      "id": "07492440-de89-4c64-a2c8-af35dbf5b7e1",
+      "name": "Typing...",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        2040,
+        220
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Loop Over Items').item.json.session }}",
+        "chatId": "={{ $('Loop Over Items').item.json.phone }}",
+        "text": "={{ $('Loop Over Items').item.json.text }}",
+        "requestOptions": {}
+      },
+      "id": "27ef8a87-c526-49ea-96e8-a4414a9b6ada",
+      "name": "Send Text",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        2400,
+        220
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "queue",
+          "mode": "list",
+          "cachedResultName": "queue"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Loop Over Items').item.json.id }}",
+            "status": "SENT",
+            "messageid": "={{ $json.key.id || $json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "session",
+              "displayName": "session",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "messageid",
+              "displayName": "messageid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "80d22f45-a8cc-4ecb-961a-372b565ac226",
+      "name": "status=SENT",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2680,
+        140
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "queue",
+          "mode": "list",
+          "cachedResultName": "queue"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Loop Over Items').item.json.id }}",
+            "status": "ERROR",
+            "messageid": "={{ $json.key.id || $json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "session",
+              "displayName": "session",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "messageid",
+              "displayName": "messageid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5cebf22e-9a07-4a29-9186-392688306634",
+      "name": "status=FAILED",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2680,
+        280
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "id": "c2297d4d-0868-494e-8828-9fe0a9d2d032",
+      "name": "Wait 2 sec",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2240,
+        220
+      ],
+      "webhookId": "292c25d2-5938-45e6-94ee-2ac1a2874c7e",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "id": "2877f394-f3ec-4997-a6ec-e186e7ac7300",
+      "name": "Wait 2 sec1",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2900,
+        300
+      ],
+      "webhookId": "9932daae-a192-4dbc-8a85-39dc77608b30"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2843676a-431a-45c0-9726-b794292b2e84",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "6f6afe92-b918-4a9d-8a86-9b3b9ba9357c",
+              "name": "phone",
+              "value": "={{ $json.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "c5c35b9e-feb0-49db-9f03-d80ca1223f71",
+              "name": "status",
+              "value": "QUEUED",
+              "type": "string"
+            },
+            {
+              "id": "5919db1b-2a6e-43a0-a667-dd74a31cf56e",
+              "name": "session",
+              "value": "={{ $('POST :session/bulk').item.json.params.session }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "40269694-3f07-435a-9c21-6c19c6bbed0d",
+      "name": "Set fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1180,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "queue",
+          "mode": "list",
+          "cachedResultName": "queue"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "text": "={{ $json.body[0].text }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "messageid",
+              "displayName": "messageid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {
+          "queryBatching": "transaction"
+        }
+      },
+      "id": "10a106f3-8625-4c69-af7e-4cdca4faaea4",
+      "name": "status=QUEUED",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1360,
+        320
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Typing...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create \"queue\" table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out Messages": {
+      "main": [
+        [
+          {
+            "node": "Set fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST :session/bulk": {
+      "main": [
+        [
+          {
+            "node": "Split Out Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typing...": {
+      "main": [
+        [
+          {
+            "node": "Wait 2 sec",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Text": {
+      "main": [
+        [
+          {
+            "node": "status=SENT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "status=FAILED",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "status=SENT": {
+      "main": [
+        [
+          {
+            "node": "Wait 2 sec1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "status=FAILED": {
+      "main": [
+        [
+          {
+            "node": "Wait 2 sec1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2 sec": {
+      "main": [
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 2 sec1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set fields": {
+      "main": [
+        [
+          {
+            "node": "status=QUEUED",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "status=QUEUED": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d9366dbe-8b35-418f-bf10-5aba7d7c1b9b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "otuDXnvCIvT9PvGM",
+  "tags": []
+}
