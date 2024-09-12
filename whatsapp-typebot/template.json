@@ -1,0 +1,1514 @@
+{
+  "name": "WAHA - TypeBot",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "e9e38dba-e9d3-4f21-b5dc-2d18cfc01956",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -180
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Typebot Config').item.json.typebot.url }}/api/v1/typebots/{{ $('Typebot Config').item.json.typebot.bot.id }}/startChat",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "textBubbleContentFormat",
+              "value": "markdown"
+            },
+            {
+              "name": "isOnlyRegistering",
+              "value": "=true"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "81466ada-d119-4f05-88d5-7a6e03dd31c8",
+      "name": "/startChat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1880,
+        520
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "## Migration - Run it ONCE\nThe action creates database table that workflow uses\n\n### Schema\nTODO\n\n",
+        "height": 489.64267820574844,
+        "width": 620.8330260062944
+      },
+      "id": "67bb9d04-9b46-480b-9af7-1a311044a78b",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        360,
+        -460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "ad8a19f1-1e31-40bf-b865-5d3a09a98cbd",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "85cc9732-7a68-48ed-9747-593eaf89e917",
+      "name": "If Typebot Session Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        1680,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "968849d8-60a6-4415-b51d-923716b7801b",
+              "name": "sessionId",
+              "value": "={{ $json.typebotsessionid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d5c69027-d508-4917-9923-b1c12a84e520",
+      "name": "Typebot Session",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2300,
+        180
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "85db6f4b-d533-430c-8480-aa9a3c8e25a8",
+      "name": "WAHA Trigger",
+      "type": "@devlikeapro/n8n-nodes-waha.wahaTrigger",
+      "typeVersion": 202409,
+      "position": [
+        520,
+        260
+      ],
+      "webhookId": "84d0afae-d33e-431b-a346-2e632df70cb5"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Start Typing",
+        "session": "={{ $('Message').item.json.session }}",
+        "chatId": "={{ $('Message').item.json.payload.from }}",
+        "requestOptions": {}
+      },
+      "id": "b86a7b14-f7fa-4601-8e5a-0b8d18103772",
+      "name": "Typing...",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        4980,
+        -40
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Stop Typing",
+        "session": "={{ $('Message').item.json.session }}",
+        "chatId": "={{ $('Message').item.json.payload.from }}",
+        "requestOptions": {}
+      },
+      "id": "bc8b2ef5-201c-4d12-bcfd-7f0a1499ffa6",
+      "name": "WAHA",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        5280,
+        -40
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Start new Typebot Session",
+        "height": 269.08304115247,
+        "width": 412.9745366846311
+      },
+      "id": "6e55653f-aa99-44a1-b198-ea312f6fae1c",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Check TypeBot Session Exists",
+        "height": 635.4349098826254,
+        "width": 1170.62885162386,
+        "color": 5
+      },
+      "id": "01cd104d-71b5-462c-8bd1-19b06f31ba94",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 👉 Set Your Typebot Configuration\n- `typebot.url` - `https://localhost:5001`\n- `typebot.bot.id` - `asdf12`",
+        "height": 295.57463686092683,
+        "width": 458.3762234606098,
+        "color": 3
+      },
+      "id": "52257e24-359c-4d16-ad36-f7c86b43c702",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        800,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f2947e03-5892-4afd-ab7b-720911abe3ae",
+              "name": "typebot.url",
+              "value": "https://typebot.devlike.pro",
+              "type": "string"
+            },
+            {
+              "id": "5011d552-b69c-48b2-a9ca-a1afe93ed500",
+              "name": "typebot.bot.id",
+              "value": "waha-4s2l8cg",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "0844c66f-6502-4ba8-9251-f76ad325dba4",
+      "name": "Typebot Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        940,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Continue Chat",
+        "height": 434.26593204049595,
+        "width": 359.76434206660133,
+        "color": 5
+      },
+      "id": "ec4ede83-9027-48ff-8947-ab0f0e562797",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3119.4348565230302,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Send Response to WhatsApp",
+        "height": 981.8265930298005,
+        "width": 2065.5079767847496,
+        "color": 4
+      },
+      "id": "24224ecd-803e-4de4-b38b-3138388ce12f",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3740,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 1.37
+      },
+      "id": "6adb377a-249c-421d-9259-47a477fa91e8",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5120,
+        -40
+      ],
+      "webhookId": "e7ddaa55-a804-4287-98c4-8cad0a9c5a67"
+    },
+    {
+      "parameters": {},
+      "id": "fe69da84-21b6-49bc-9dd8-c5c7c8d2d87a",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        5440,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "51b1d148-572b-4620-90af-32cea516951c",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        4360,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Image",
+        "session": "={{ $('Message').item.json.session }}",
+        "chatId": "={{ $('Message').item.json.payload.from }}",
+        "file": "={\n  \"mimetype\": \"image/jpeg\",\n  \"filename\": \"filename.jpg\",\n  \"url\": \"{{ $('Split Out').item.json.url }}\"\n}",
+        "requestOptions": {}
+      },
+      "id": "259a1703-699b-4673-948c-cf21b7684667",
+      "name": "Send Image",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        4960,
+        180
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Message').item.json.session }}",
+        "chatId": "={{ $('Message').item.json.payload.from }}",
+        "text": "={{ $('Split Out').item.json.text }}",
+        "requestOptions": {}
+      },
+      "id": "3daba24a-3de9-4fc9-a17b-117e0321a8dc",
+      "name": "Send Text",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        5440,
+        -40
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "messages",
+        "options": {}
+      },
+      "id": "7e28b6a1-9b79-4f88-bb16-c4b720e2ce42",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        4120,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP TABLE IF EXISTS typebot;\nCREATE TABLE IF NOT EXISTS typebot (\n    id SERIAL PRIMARY KEY,\n    session VARCHAR(50)  NOT NULL,\n    chatId VARCHAR(50) NOT NULL,\n    typebotSessionId VARCHAR(50)  NOT NULL\n);",
+        "options": {}
+      },
+      "id": "1732913d-4514-4264-852b-81d38d8b6ba2",
+      "name": "Recreate \"typebot\" table",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        580,
+        -180
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP TABLE IF EXISTS typebot_shortcuts;\nCREATE TABLE IF NOT EXISTS typebot_shortcuts (\n    id SERIAL PRIMARY KEY,\n    session VARCHAR(50)  NOT NULL,\n    chatId VARCHAR(50) NOT NULL,\n    shortcut VARCHAR(50) NOT NULL,\n    text VARCHAR(100) NOT NULL\n);",
+        "options": {}
+      },
+      "id": "6e4ec164-183c-4e9c-961f-4881425bed6c",
+      "name": "Recreate \"typebot_shortcuts\" table",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        760,
+        -180
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "typebot",
+          "mode": "list",
+          "cachedResultName": "typebot"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session": "={{ $('Message').item.json.session }}",
+            "chatid": "={{ $('Message').item.json.payload.from }}",
+            "typebotsessionid": "={{ $json.sessionId }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "session",
+              "displayName": "session",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "chatid",
+              "displayName": "chatid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "typebotsessionid",
+              "displayName": "typebotsessionid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bed8e498-3ab9-4e2d-afc7-1197cd6c2993",
+      "name": "Save Session Id",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2140,
+        520
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "messages",
+        "options": {}
+      },
+      "id": "229ffe37-5be7-47c9-8ff9-2ecc9b6950c7",
+      "name": "Split Out1",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        4140,
+        -460
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Save Buttons",
+        "height": 268.6465634874653,
+        "width": 973.3643035403909,
+        "color": 6
+      },
+      "id": "8cee81be-cc24-4eae-9b6f-ac87df09f55f",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3740,
+        -540
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Load Buttons",
+        "height": 520.3975830170392,
+        "width": 590.7244315985694,
+        "color": 6
+      },
+      "id": "2fb040cc-d9ff-4bf9-80df-d06bc0ad3c66",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2481.2195154508427,
+        -165.86167176470735
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "deleteTable",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "typebot_shortcuts",
+          "mode": "list",
+          "cachedResultName": "typebot_shortcuts"
+        },
+        "deleteCommand": "delete",
+        "where": {
+          "values": [
+            {
+              "column": "session",
+              "value": "={{ $('Message').item.json.session }}"
+            },
+            {
+              "column": "chatid",
+              "value": "={{ $('Message').item.json.payload.from }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d0c5d3f1-ad32-4acf-a3f0-6d9432e5aff9",
+      "name": "Clean Shortcuts",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2940,
+        100
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "typebot",
+          "mode": "list",
+          "cachedResultName": "typebot"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "session",
+              "value": "={{ $json.session }}"
+            },
+            {
+              "column": "chatid",
+              "value": "={{ $json.payload.from }}"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "id",
+              "direction": "DESC"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "114fceef-ee8e-4eaa-ada8-a4df6212b476",
+      "name": "Get Typebot Session Id",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1500,
+        240
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "1",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "5678d6f7-764b-48cc-bed5-79159b30f9e6",
+                    "leftValue": "1",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "1b325e6d-206d-484a-9b74-a57b4ab2fae9",
+      "name": "ALL",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        3760,
+        80
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e706e5ad-3c73-45e7-b1d2-857aa38ec271",
+              "name": "text",
+              "value": "={{ $('Lookup Shortcut').item.json.text || $('Message').item.json.payload.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "69acc0ee-fcf9-45f0-8a1a-0717ddffc3f8",
+      "name": "MessageText",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2760,
+        100
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a21f6f8f-fa4b-437a-ac1e-e23e84d3a27b",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3380,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "typebot_shortcuts",
+          "mode": "list",
+          "cachedResultName": "typebot_shortcuts"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "session",
+              "value": "={{ $('Message').item.json.session }}"
+            },
+            {
+              "column": "chatid",
+              "value": "={{ $('Message').item.json.payload.from }}"
+            },
+            {
+              "column": "shortcut",
+              "value": "={{ $('Message').item.json.payload.body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f1b5175d-b458-4d10-9ae2-065d1987b6da",
+      "name": "Lookup Shortcut",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2560,
+        100
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "typebot_shortcuts",
+          "mode": "list",
+          "cachedResultName": "typebot_shortcuts"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session": "={{ $('Message').item.json.session }}",
+            "chatid": "={{ $('Message').item.json.payload.from }}",
+            "shortcut": "={{ $json.shortcut }}",
+            "text": "={{ $json.text }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "session",
+              "displayName": "session",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "chatid",
+              "displayName": "chatid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "shortcut",
+              "displayName": "shortcut",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "740196d2-bac0-426d-8a56-dde629838775",
+      "name": "Save Shortcuts",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        4320,
+        -460
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "var item = $json;\nlet messages = []\n\nif (item && item?.input?.items) {\n    const items = item.input.items;\n    messages = items.map((button, index) => {\n      return {\n        shortcut: index+1,\n        text: button.content\n      }\n    });\n}\n\n\nreturn { 'json' : { messages: messages } };"
+      },
+      "id": "31d1de65-0dd2-440d-b06c-b0233c481fe5",
+      "name": "Extract buttons",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3920,
+        -460
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "function decodeEntities(encodedString) {\n    var translate_re = /&(nbsp|amp|quot|lt|gt);/g;\n    var translate = {\n        \"nbsp\":\" \",\n        \"amp\" : \"&\",\n        \"quot\": \"\\\"\",\n        \"lt\"  : \"<\",\n        \"gt\"  : \">\"\n    };\n    return encodedString.replace(translate_re, function(match, entity) {\n        return translate[entity];\n    }).replace(/&#(\\d+);/gi, function(match, numStr) {\n        var num = parseInt(numStr, 10);\n        return String.fromCharCode(num);\n    });\n}\n\nvar item = $json;\nvar messages = []\nfor (message of item.messages){\n  let data\n  if (message.type==\"text\"){\n    data = {\n      type: \"text\",\n      text:  decodeEntities(message.content.markdown)\n    }\n  } else if (message.type == \"image\" || message.type==\"video\" || message.type == \"audio\") {\n     data = {\n      type: message.type,\n      url:  message.content.url\n    }\n  }\n  \n  if (!data){\n    console.log(`Unknown type ${message.type}`)\n    continue\n  } \n  messages.push(data)\n}\n\nif (item.input && item.input?.options?.labels?.placeholder){\n  const data = {\n    type: \"text\",\n    text: decodeEntities(item.input.options.labels.placeholder)\n  }\n  messages.push(data)\n}\n\nif (item && item?.input?.items) {\n    const items = item.input.items;\n    const parts = items.map((i, index) => `*${index+1}* - ${i.content}`);\n    const data = {\n        type: \"text\",\n        text: decodeEntities(parts.join(\"\\n\"))\n    }\n    messages.push(data)\n}\n\n\nreturn { 'json' : { messages: messages } };"
+      },
+      "id": "88a51cbc-ed66-4f9b-bdf0-1a551d074ae6",
+      "name": "WAHA message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3940,
+        80
+      ],
+      "notesInFlow": true,
+      "notes": "Typebot => WhatsApp format"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Split Out').item.json.type }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "abd3da3d-f63a-4c08-a6cc-5378c76bbceb",
+                    "leftValue": "={{ $('Split Out').item.json.type }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "5b4ccb9f-fe59-4f54-ab24-23dbd8953af1",
+                    "leftValue": "={{ $('Split Out').item.json.type }}",
+                    "rightValue": "video",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "video"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "b366a982-51fd-49f9-b90d-2200ad320ad9",
+                    "leftValue": "={{ $('Split Out').item.json.type }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7904cd9c-e52c-4e4d-b9c0-0d939938f35a",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        4620,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Voice",
+        "session": "={{ $('Message').item.json.session }}",
+        "chatId": "={{ $('Message').item.json.payload.from }}",
+        "file": "={\n  \"mimetype\": \"audio/ogg; codecs=opus\",\n  \"url\": \"{{ $('Split Out').item.json.url }}\"\n}",
+        "requestOptions": {}
+      },
+      "id": "bde40b9a-03ec-4796-acc6-30e1031d7f62",
+      "name": "Send Voice",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        4960,
+        520
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Video",
+        "session": "={{ $('Message').item.json.session }}",
+        "chatId": "={{ $('Message').item.json.payload.from }}",
+        "file": "={\n  \"mimetype\": \"video/mp4\",\n  \"url\": \"{{ $('Split Out').item.json.url }}\"\n}",
+        "requestOptions": {}
+      },
+      "id": "c022b5c5-f4b8-43fc-add1-67cec331f0f7",
+      "name": "Send Video",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        4960,
+        360
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "kGRloiEEB0Ky91l6",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "2cfcb1fd-a685-4378-84d9-294a1ddb5638",
+      "name": "Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1320,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Typebot Config').item.json.typebot.url }}/api/v1/sessions/{{ $('Typebot Session').item.json.sessionId }}/continueChat",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "textBubbleContentFormat",
+              "value": "markdown"
+            },
+            {
+              "name": "message.type",
+              "value": "text"
+            },
+            {
+              "name": "message.text",
+              "value": "={{ $('MessageText').item.json.text || \"\" }}"
+            },
+            {
+              "name": "message.attachedFileUrls[0]",
+              "value": "={{ $('Message').item.json.payload.media?.url || \"\" }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "40d0a738-9a3d-4983-93fc-8c9ff0c62c19",
+      "name": "/continueChat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3260,
+        100
+      ],
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Recreate \"typebot\" table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "/startChat": {
+      "main": [
+        [
+          {
+            "node": "Save Session Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Typebot Session Exists": {
+      "main": [
+        [
+          {
+            "node": "Typebot Session",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "/startChat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typebot Session": {
+      "main": [
+        [
+          {
+            "node": "Lookup Shortcut",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typing...": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA": {
+      "main": [
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typebot Config": {
+      "main": [
+        [
+          {
+            "node": "Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA Trigger": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Typebot Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Image": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Text": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recreate \"typebot\" table": {
+      "main": [
+        [
+          {
+            "node": "Recreate \"typebot_shortcuts\" table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Session Id": {
+      "main": [
+        [
+          {
+            "node": "Typebot Session",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Save Shortcuts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean Shortcuts": {
+      "main": [
+        [
+          {
+            "node": "/continueChat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Typebot Session Id": {
+      "main": [
+        [
+          {
+            "node": "If Typebot Session Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ALL": {
+      "main": [
+        [
+          {
+            "node": "Extract buttons",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WAHA message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MessageText": {
+      "main": [
+        [
+          {
+            "node": "Clean Shortcuts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing1": {
+      "main": [
+        [
+          {
+            "node": "/startChat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lookup Shortcut": {
+      "main": [
+        [
+          {
+            "node": "MessageText",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract buttons": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA message": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Typing...",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Voice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Voice": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Video": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message": {
+      "main": [
+        [
+          {
+            "node": "Get Typebot Session Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "/continueChat": {
+      "main": [
+        [
+          {
+            "node": "ALL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "01c53d18-d862-4cbf-bc9f-90e90c3977a5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "8tiLlVpceWw7LHXF",
+  "tags": []
+}
