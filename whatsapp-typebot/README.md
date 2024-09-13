@@ -42,3 +42,8 @@ For example, if you have buttons:
 
 and want to select **Invoice** you can send both **1** and **Invoice** back to WhatsApp bot
 
+### Input Files
+You can use [Input Text](https://docs.typebot.io/editor/blocks/inputs/text#allow-attachments) 
+Typebot block to allow attachments. 
+
+Then you can send the file to the WhatsApp bot and process it in n8n or Typebot.
