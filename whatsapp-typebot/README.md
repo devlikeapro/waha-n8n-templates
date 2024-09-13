@@ -47,3 +47,25 @@ You can use [Input Text](https://docs.typebot.io/editor/blocks/inputs/text#allow
 Typebot block to allow attachments. 
 
 Then you can send the file to the WhatsApp bot and process it in n8n or Typebot.
+
+### Supported Typebot Blocks
+#### Bubbles
+- [x] Text
+- [x] Image
+- [x] Video
+- [ ] Embed
+- [x] Audio
+
+#### Inputs
+- [x] Text
+- [x] Text + File attachment (one)
+- [x] Number
+- [x] Email
+- [x] Website
+- [x] Date
+- [x] Phone
+- [x] Buttons
+- [ ] Pic choice
+- [ ] Payment
+- [ ] Rating
+- [ ] File - **use `Text + File` input instead**
