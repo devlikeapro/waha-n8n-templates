@@ -16,6 +16,7 @@ node.
 - [How to use the templates](#how-to-use-the-templates)
 - [Workflows Templates](#workflows-templates)
   * [WhatsApp Bot](#whatsapp-bot)
+  * [WhatsApp Typebot Integration](#whatsapp-typebot-integration)
   * [Send WhatsApp QR code for authorization to Email](#send-whatsapp-qr-code-for-authorization-to-email)
   * [Send Bulk Messages API](#send-bulk-messages-api)
   * [Forward WhatsApp text messages to email](#forward-whatsapp-text-messages-to-email)
@@ -48,6 +49,21 @@ node.
 
 Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"** and sends Image if received
 **"image"**.
+
+## [WhatsApp Typebot Integration](./whatsapp-typebot)
+<p align="center">
+    <img 
+        src="./whatsapp-typebot/workflow.png"
+        height=300
+    />
+    <img 
+        src="./whatsapp-typebot/typebot.png"
+        height=300
+    />
+</p>
+
+Integrate [Typebot](https://typebot.io/) with [Self-Hosted WhatsApp API (WAHA)](https://waha.devlike.pro) to send
+messages to WhatsApp via [n8n](https://n8n.io/).
 
 ## [Send WhatsApp QR code for authorization to Email](./send-qr-code-to-email)
 
