@@ -27,6 +27,7 @@ node.
 
   * [WhatsApp Bot](#whatsapp-bot)
   * [WhatsApp Typebot Integration](#whatsapp-typebot-integration)
+  * [WhatsApp Chatwoot Integration](#whatsapp-chatwoot-integration)
   * [Send WhatsApp QR code for authorization to Email](#send-whatsapp-qr-code-for-authorization-to-email)
   * [Send Bulk Messages API](#send-bulk-messages-api)
   * [Forward WhatsApp text messages to email](#forward-whatsapp-text-messages-to-email)
@@ -73,6 +74,24 @@ Integrate [Typebot](https://typebot.io/) with [Self-Hosted WhatsApp API (WAHA)](
 messages to WhatsApp via [n8n](https://n8n.io/).
 
 [**Read more ->**](./whatsapp-typebot)
+
+<hr>
+
+## WhatsApp Chatwoot Integration
+<p align="center">
+    <img 
+        src="./chatwoot/waha-chatwoot.png"
+        height=300
+    />
+</p>
+
+You can integrate
+[WAHA](https://waha.devlike.pro)
+with
+[ChatWoot](https://www.chatwoot.com/)
+to receive and send messages to WhatsApp via n8n.
+
+[**Read more ->**](./chatwoot)
 
 <hr>
 
