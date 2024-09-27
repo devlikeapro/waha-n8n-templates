@@ -1,0 +1,77 @@
+{
+  "name": "WhatsApp + ChatWoot: Database Migrations",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "aca10cc0-4750-4134-be85-265534cb80c0",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        540,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Migration - Run it ONCE\nThe action creates database table that workflow uses",
+        "height": 489.64267820574844,
+        "width": 620.8330260062944
+      },
+      "id": "22749eeb-ebf0-4813-b452-8303f0b17609",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        480,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DROP TABLE IF EXISTS chatwoot_contacts;\n\nCREATE TABLE IF NOT EXISTS chatwoot_contacts (\n    id SERIAL PRIMARY KEY,\n    session VARCHAR(50) NOT NULL,\n    chatId VARCHAR(50) NOT NULL,\n    chatwootInboxIdentifier VARCHAR(50) NOT NULL,\n    chatwootSourceId VARCHAR(50) NOT NULL\n);\n\nCREATE INDEX idx_session_chatId ON chatwoot_contacts(session, chatId);",
+        "options": {}
+      },
+      "id": "80eb9337-a260-41cb-8a71-56eca71c0a8c",
+      "name": "Recreate \"chatwoot_contacts\" table",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        740,
+        380
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Recreate \"chatwoot_contacts\" table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "12f03981-4eb2-4bb9-acc2-5a0ebb7462a4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "G3KVi5bQkIZph27U",
+  "tags": []
+}

@@ -1,0 +1,1056 @@
+{
+  "name": "WhatsApp + ChatWoot: WAHA => ChatWoot Messages",
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.body }}",
+        "options": {}
+      },
+      "id": "8a04022f-e9fa-47a3-947c-44bbeac991b7",
+      "name": "Body",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        540,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "a7b7b1ea-7575-416f-87f3-c4f799c16de0",
+                    "leftValue": "={{ $json.event }}",
+                    "rightValue": "message",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "message"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ab41bbd3-7366-402f-bec0-d179785ba607",
+      "name": "Listen for Events",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ Settings",
+        "height": 230.73873110442463,
+        "width": 249.0031112314722
+      },
+      "id": "c3a7ce28-32c7-4229-b151-15a91d9933a0",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f13a39ea-e0c6-43c7-8d68-26ecb1e4dee6",
+              "name": "chatwoot.accountId",
+              "value": "1",
+              "type": "string"
+            },
+            {
+              "id": "90de448a-8c1a-4a21-b2f6-dafb038c4ca2",
+              "name": "chatwoot.inboxId",
+              "value": "1",
+              "type": "string"
+            },
+            {
+              "id": "3aa84f3f-69b4-479e-8d8c-321752b635b6",
+              "name": "chatwoot.inboxIdentifier",
+              "value": "mzrVmNPDSgPd9PLg16cebDMX",
+              "type": "string"
+            },
+            {
+              "id": "cb03a844-2f32-4b99-8ce4-9055586fc99b",
+              "name": "chatwoot.url",
+              "value": "https://chatwoot.devlike.pro",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "d7f93ac4-4b3f-4e4c-947b-c1466c7dc587",
+      "name": "ChatWoot",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        940,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "06fcdd61-8f93-4f9a-8429-9a97791316b2",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d8e8e2bf-4b55-4a6f-9d2b-02f275954b2b",
+      "name": "Conversation Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        2480,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Upsert Conversation",
+        "height": 531.1279419559463,
+        "width": 673.5718442051377,
+        "color": 4
+      },
+      "id": "88627997-ab64-49ea-b357-0e7c57ba15be",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Message",
+        "height": 588.4060090900118,
+        "width": 1187.6854522160845,
+        "color": 4
+      },
+      "id": "e64671cb-be47-40d2-820d-013558e9f637",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2980,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Upsert Contact",
+        "height": 531.1279419559463,
+        "width": 832.8267518785899,
+        "color": 4
+      },
+      "id": "735dc9b7-3b90-4162-b0e3-ea5dfad09c1c",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Contacts API",
+        "operation": "Create A Contact",
+        "inbox_identifier": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}",
+        "identifier": "={{ undefined }}",
+        "name": "={{ $('Body').item.json.payload._data.pushName }}",
+        "phone_number": "=+{{ $('Body').item.json.payload.from.split('@')[0] }}",
+        "requestOptions": {}
+      },
+      "id": "8442ff7b-218d-4774-9a37-3a244d375eae",
+      "name": "Create Contact",
+      "type": "@devlikeapro/n8n-nodes-chatwoot.chatWoot",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        500
+      ],
+      "credentials": {
+        "chatwootApi": {
+          "id": "PVInLRsUs8KfH83F",
+          "name": "ChatWoot Inbox (WhatsApp - United Kingdom WAHA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Conversations API",
+        "operation": "Create A Conversation",
+        "inbox_identifier": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}",
+        "contact_identifier": "={{ $('Contact').item.json.sourceId }}",
+        "requestOptions": {}
+      },
+      "id": "3d3eef15-cbfa-4bf5-8c50-b5e88ef8ae23",
+      "name": "Create Conversation",
+      "type": "@devlikeapro/n8n-nodes-chatwoot.chatWoot",
+      "typeVersion": 1,
+      "position": [
+        2660,
+        500
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "chatwootApi": {
+          "id": "PVInLRsUs8KfH83F",
+          "name": "ChatWoot Inbox (WhatsApp - United Kingdom WAHA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "ad8a19f1-1e31-40bf-b865-5d3a09a98cbd",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0363cb66-8dc3-428e-9fe9-a159b9c1b754",
+      "name": "If Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        1480,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chatwoot_contacts",
+          "mode": "list",
+          "cachedResultName": "chatwoot_contacts"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session": "={{ $('Body').item.json.session }}",
+            "chatid": "={{ $('Body').item.json.payload.from }}",
+            "chatwootinboxidentifier": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}",
+            "chatwootsourceid": "={{ $json.source_id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "session",
+              "displayName": "session",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chatid",
+              "displayName": "chatid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chatwootinboxidentifier",
+              "displayName": "chatwootinboxidentifier",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chatwootsourceid",
+              "displayName": "chatwootsourceid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "48043a43-2edd-4c4e-9640-03be184a5af0",
+      "name": "Save Source Id",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1820,
+        500
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chatwoot_contacts",
+          "mode": "list",
+          "cachedResultName": "chatwoot_contacts"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "session",
+              "value": "={{ $json.session }}"
+            },
+            {
+              "column": "chatid",
+              "value": "={{ $json.payload.from }}"
+            },
+            {
+              "column": "chatwootinboxidentifier",
+              "value": "={{ $json.chatwoot.inboxIdentifier }}"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "id",
+              "direction": "DESC"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2ed5b53c-0b19-4ad4-b5d9-fa6921e62bef",
+      "name": "Get Contact",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1300,
+        280
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Conversations API",
+        "operation": "List All Contact Conversations",
+        "inbox_identifier": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}",
+        "contact_identifier": "={{ $('Contact').item.json.sourceId }}",
+        "requestOptions": {}
+      },
+      "id": "0cdb7946-db46-43f6-9bba-077c455cffc1",
+      "name": "Get Conversation",
+      "type": "@devlikeapro/n8n-nodes-chatwoot.chatWoot",
+      "typeVersion": 1,
+      "position": [
+        2300,
+        260
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "chatwootApi": {
+          "id": "PVInLRsUs8KfH83F",
+          "name": "ChatWoot Inbox (WhatsApp - United Kingdom WAHA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6c30097b-1b86-4503-acb8-62d51b5d469c",
+              "name": "sourceId",
+              "value": "={{ $json.chatwootsourceid }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5293f87e-eed3-4aa6-8414-16fc320c7d2c",
+      "name": "Contact",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1960,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6c30097b-1b86-4503-acb8-62d51b5d469c",
+              "name": "conversationId",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bd7b1911-0635-4880-89fd-1541809665ed",
+      "name": "Conversation",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2820,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "9dc60cdc-5d7b-44ab-b959-3cec77632855",
+              "leftValue": "={{  $('Body').item.json.payload.media.url }}",
+              "rightValue": "Ping",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "6d5ac845-ab25-417e-8b21-a4622b98034f",
+      "name": "If media is image",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        3480,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "waha-qr-webhooks",
+        "options": {}
+      },
+      "id": "be934084-4834-44be-97b4-cbd6d95c2807",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        360,
+        360
+      ],
+      "webhookId": "b7453a5b-c133-40d1-a221-870b3ef3d8d0"
+    },
+    {
+      "parameters": {
+        "url": "={{  $('Body').item.json.payload.media.url }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "wahaApi",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "2dccaec0-8388-47f1-bed5-44fcb2e7fa44",
+      "name": "Download Media",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3680,
+        200
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "Messages API",
+        "operation": "Create A Message",
+        "inbox_identifier": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}",
+        "contact_identifier": "={{ $('Contact').item.json.sourceId }}",
+        "conversation_id": "={{ $('Conversation').item.json.conversationId }}",
+        "content": "={{ $('Body').item.json.payload.body }}",
+        "requestOptions": {}
+      },
+      "id": "33e5d420-ae6c-4a6b-af65-8396e089adc6",
+      "name": "Send Text",
+      "type": "@devlikeapro/n8n-nodes-chatwoot.chatWoot",
+      "typeVersion": 1,
+      "position": [
+        3460,
+        400
+      ],
+      "credentials": {
+        "chatwootApi": {
+          "id": "PVInLRsUs8KfH83F",
+          "name": "ChatWoot Inbox (WhatsApp - United Kingdom WAHA)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "true",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "242f1ea8-0d3f-491c-a60b-1ac78c82488f",
+                    "leftValue": "true",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "1537d5b6-55cb-4313-902a-81f2d965b264",
+                    "leftValue": "1",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "34719d12-3a22-45c8-bcac-5708e8c3f2b0",
+      "name": "Run All",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        3020,
+        240
+      ],
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Seen",
+        "session": "={{ $('Body').item.json.session }}",
+        "chatId": "={{ $('Body').item.json.payload.from }}",
+        "messageId": "={{ $('Body').item.json.payload.id }}",
+        "participant": "",
+        "requestOptions": {}
+      },
+      "id": "04ab69f1-e884-44b2-bb23-101e7a2925c2",
+      "name": "Send Seen",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        3440,
+        580
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('ChatWoot').item.json.chatwoot.url }}/public/api/v1/inboxes/{{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}/contacts/{{ $('Contact').item.json.sourceId }}/conversations/{{ $('Conversation').item.json.conversationId }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "chatwootApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "attachments[]",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "7e95466b-1d44-4a87-8fcb-c2057adb2ed2",
+      "name": "Send Media To ChatWoot",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3920,
+        200
+      ],
+      "credentials": {
+        "chatwootApi": {
+          "id": "PVInLRsUs8KfH83F",
+          "name": "ChatWoot Inbox (WhatsApp - United Kingdom WAHA)"
+        }
+      },
+      "onError": "continueErrorOutput"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "connection": "keep-alive",
+            "host": "n8n.devlike.pro",
+            "x-forwarded-for": "109.71.242.111",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-request-start": "1727252031.288",
+            "content-length": "929",
+            "accept": "application/json, text/plain, */*",
+            "content-type": "application/json",
+            "user-agent": "WAHA/2024.9.6",
+            "accept-encoding": "gzip, compress, deflate, br"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "event": "message",
+            "session": "chatwoot",
+            "metadata": {},
+            "me": {
+              "id": "447375538542@c.us",
+              "pushName": "United Kingdom WAHA"
+            },
+            "payload": {
+              "id": "false_79069471990@c.us_6738E65C1C0E65591F2739658FC18A26",
+              "timestamp": 1727252030,
+              "from": "79069571990@c.us",
+              "fromMe": false,
+              "body": "Hi there's!",
+              "hasMedia": true,
+              "media": {
+                "url": "https://github.com/devlikeapro/waha/raw/core/examples/dev.likeapro.jpg",
+                "mimetype": "image/jpeg",
+                "filename": null
+              },
+              "ack": null,
+              "ackName": "UNKNOWN",
+              "replyTo": null,
+              "_data": {
+                "key": {
+                  "remoteJid": "79069471990@s.whatsapp.net",
+                  "fromMe": false,
+                  "id": "6738E65C1C0E65591F2739658FC18A26"
+                },
+                "messageTimestamp": 1727252030,
+                "pushName": "Sim1",
+                "broadcast": false,
+                "message": {
+                  "conversation": "Hi there's!",
+                  "messageContextInfo": {
+                    "deviceListMetadata": {
+                      "senderKeyHash": "PagR+fyIeb6Sow==",
+                      "senderTimestamp": "1726823406",
+                      "recipientKeyHash": "jj0a+fOuEjr55A==",
+                      "recipientTimestamp": "1727179834"
+                    },
+                    "deviceListMetadataVersion": 2
+                  }
+                },
+                "verifiedBizName": "Sim1"
+              }
+            },
+            "engine": "NOWEB",
+            "environment": {
+              "version": "2024.9.6",
+              "engine": "NOWEB",
+              "tier": "PLUS",
+              "browser": "/usr/bin/google-chrome-stable"
+            }
+          },
+          "webhookUrl": "https://n8n.devlike.pro/webhook-test/waha-qr-webhooks",
+          "executionMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Body": {
+      "main": [
+        [
+          {
+            "node": "Listen for Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Listen for Events": {
+      "main": [
+        [
+          {
+            "node": "ChatWoot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatWoot": {
+      "main": [
+        [
+          {
+            "node": "Get Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Exists": {
+      "main": [
+        [
+          {
+            "node": "Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Conversation": {
+      "main": [
+        [
+          {
+            "node": "Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Exists": {
+      "main": [
+        [
+          {
+            "node": "Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Contact": {
+      "main": [
+        [
+          {
+            "node": "Save Source Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Source Id": {
+      "main": [
+        [
+          {
+            "node": "Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Contact": {
+      "main": [
+        [
+          {
+            "node": "If Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Conversation": {
+      "main": [
+        [
+          {
+            "node": "Conversation Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contact": {
+      "main": [
+        [
+          {
+            "node": "Get Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation": {
+      "main": [
+        [
+          {
+            "node": "Run All",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If media is image": {
+      "main": [
+        [
+          {
+            "node": "Download Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Media": {
+      "main": [
+        [
+          {
+            "node": "Send Media To ChatWoot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run All": {
+      "main": [
+        [
+          {
+            "node": "If media is image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Seen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "772e161a-6ccf-404c-9857-25234760a2a1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "2ChwhJ4hAkr8QjI1",
+  "tags": []
+}
