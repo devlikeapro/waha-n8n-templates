@@ -44,6 +44,7 @@ The workflow **receives** messages from ChatWoot and sends them to WhatsApp via 
 4. **Active** your workflow in n8n
 5. Copy **Production URL** from **Webhook** node
 6. Go to **ChatWoot** and create new **API** **Inbox** and set **Webhook URL** from **n8n**
+7. Send a message from **ChatWoot** to see it in **WhatsApp**
 
 ## 3. WAHA => ChatWoot
 
@@ -64,9 +65,14 @@ The workflow **receives** messages from WhatsApp via WAHA and sends them to Chat
 6. **Active** your workflow in n8n
 7. Copy **Production URL** from **Webhook** node
 8. Paste it in your **WAHA** session webhook settings and configure to listen `message` events
-9. Send a test message from WhatsApp to see it in ChatWoot
+9. Send a test message from **WhatsApp** to see it in **ChatWoot**
 
 ## 4. (optional) Sync WhatsApp contacts with ChatWoot
 
-[**template.json**](./WhatsApp___ChatWoot__WAHA____ChatWoot_Contacts.json)
+[**template.json**](./WhatsApp___ChatWoot__WAHA____ChatWoot_Sync_Contacts.json)
+
+1. Import [template.json](./WhatsApp___ChatWoot__WAHA____ChatWoot_Sync_Contacts.json) to **n8n**
+2. Set **WAHA** settings
+3. Set **ChatWoot** settings
+4. Click **Test Workflow** to sync contacts
 
