@@ -38,6 +38,8 @@ node.
 
 <!-- tocstop -->
 
+<hr>
+
 ## WhatsApp Bot
 
 <p align="center">
@@ -51,6 +53,8 @@ Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"**
 **"image"**.
 
 [**Read more ->**](./chatting-template)
+
+<hr>
 
 ## [WhatsApp Typebot Integration](./whatsapp-typebot)
 
