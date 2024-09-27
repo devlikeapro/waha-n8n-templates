@@ -1,12 +1,7 @@
 [<- Back](/)
 
 # ChatWoot WhatsApp Integration
-<p align="center">
-    <img 
-        src="./screenshot.png"
-        height=400
-    />
-</p>
+![](./screenshot.png)
 
 You can integrate 
 [WAHA](https://waha.devlike.pro)
