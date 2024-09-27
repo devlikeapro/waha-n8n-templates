@@ -28,6 +28,8 @@ We'll guide you through the setup steps for each template.
 
 [**template.json**](./WhatsApp___ChatWoot__WAHA____ChatWoot_Messages.json)
 
+![](waha-to-chatwoot.png)
+
 The workflow **receives** messages from WhatsApp via WAHA and sends them to ChatWoot.
 1. Go to **ChatWoot** and create new **Inbox**
 2. Get from the **Inbox** settings and **ChatWoot** settings:
