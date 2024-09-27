@@ -1,0 +1,941 @@
+{
+  "name": "WhatsApp + ChatWoot: ChatWoot => WAHA Messages",
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "b8f9209a-1980-4410-a1fb-10684f11e2f1",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        2320,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f13a39ea-e0c6-43c7-8d68-26ecb1e4dee6",
+              "name": "waha.session",
+              "value": "chatwoot",
+              "type": "string"
+            },
+            {
+              "id": "8f21fbc1-95c2-463f-bcff-60d1f1fe23fa",
+              "name": "waha.chatId",
+              "value": "={{ $('Body').item.json.body.conversation.meta.sender.phone_number.replace(/^\\+/, '') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "c8a60120-8c8f-4f68-951f-04cc12b7a34a",
+      "name": "WAHA",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1280,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "90bc7bb1-8721-4b64-846b-bc8d1ed632fb",
+              "name": "body",
+              "value": "={{ $json.body }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4ef5dad2-861a-4535-aefd-5fd8134f45ab",
+      "name": "Body",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        840,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "aaf578cf-ca56-4158-9305-95c961ef802d",
+              "leftValue": "={{ $json.body.message_type }}",
+              "rightValue": "outgoing",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ec9a5d54-59e7-427b-baec-10a943876e6c",
+      "name": "outgoing",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        1020,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "noData",
+        "options": {}
+      },
+      "id": "b23c52a9-4f0d-4b1d-a6a3-861faf51ce53",
+      "name": "OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ Settings",
+        "height": 230.73873110442463,
+        "width": 249.0031112314722
+      },
+      "id": "471b710c-bdea-4a3b-9157-c0b74933d8c9",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body.conversation.messages",
+        "options": {
+          "disableDotNotation": false,
+          "destinationFieldName": ""
+        }
+      },
+      "id": "80eb9f02-90b3-47da-9e87-3f4a0326f8f5",
+      "name": "Message",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "attachments",
+        "options": {}
+      },
+      "id": "aebb222c-21e0-41e6-9351-990bdd18f574",
+      "name": "Attachments",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        -140
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('WAHA').item.json.waha.session }}",
+        "chatId": "={{ $('WAHA').item.json.waha.chatId }}",
+        "text": "={{ $('Message').item.json.content }}",
+        "requestOptions": {}
+      },
+      "id": "0d2d5bec-9a67-4fb6-b190-0f2dded01810",
+      "name": "Send Text",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        3020,
+        460
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "1",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "attachments"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "288b1e74-37ee-4179-b0fe-53ac3290903f",
+                    "leftValue": "1",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "message"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "d025a440-49be-4447-b77b-580e5117ca86",
+                    "leftValue": "1",
+                    "rightValue": "1",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "end"
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "id": "3b5e8b7d-50be-4b7e-8f41-e56254aeabf2",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        1740,
+        240
+      ],
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Image",
+        "session": "={{ $('WAHA').item.json.waha.session }}",
+        "chatId": "={{ $('WAHA').item.json.waha.chatId }}",
+        "file": "={\n  \"mimetype\": \"image/jpeg\",\n  \"filename\": \"filename.jpg\",\n  \"url\": \"{{ $json.data_url }}\"\n}",
+        "requestOptions": {}
+      },
+      "id": "b71d79fa-2eae-4fb8-97f6-665c496c85f9",
+      "name": "Send Image",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        2980,
+        -160
+      ],
+      "executeOnce": false,
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send File",
+        "session": "={{ $('WAHA').item.json.waha.session }}",
+        "chatId": "={{ $('WAHA').item.json.waha.chatId }}",
+        "file": "={\n  \"mimetype\": \"{{ $json.mimetype }}\",\n  \"filename\" : \"{{ $json.filename }}\",\n  \"url\": \"{{ $json.data_url }}\"\n}",
+        "requestOptions": {}
+      },
+      "id": "57a36c94-94d7-431f-97a8-a95a647322fa",
+      "name": "Send File",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        3000,
+        180
+      ],
+      "executeOnce": false,
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "3b5a4720-4ad9-43a1-a9f7-f00e925f15d5",
+              "leftValue": "={{ $json.content }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "1027b08d-e1e5-4dc2-a9cd-ee6a1474ea28",
+      "name": "If Text",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        2320,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.file_type }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "image"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "id": "6a470e77-4ac9-4a41-bca5-b0afb37657e5",
+                    "leftValue": "={{ $json.file_type }}",
+                    "rightValue": "audio",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "audio"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra"
+        }
+      },
+      "id": "a54f49e2-b2d8-48ec-888c-742eeff520df",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.1,
+      "position": [
+        2440,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Voice",
+        "session": "={{ $('WAHA').item.json.waha.session }}",
+        "chatId": "={{ $('WAHA').item.json.waha.chatId }}",
+        "file": "={\n  \"url\": \"{{ $json.data_url }}\"\n}",
+        "requestOptions": {}
+      },
+      "id": "47407a52-b0e1-48fe-b060-39c6cf193c5e",
+      "name": "Send Voice",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        3000,
+        20
+      ],
+      "executeOnce": false,
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3adfb65c-1e4c-427a-9043-c86d32d36a37",
+              "name": "filename",
+              "value": "={{ $json.data_url.split('/').last() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "4843ca9b-7e12-4dfd-9be0-cf0e5bdd5bc6",
+      "name": "File",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2600,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatwoot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "b71cde00-b907-4fd5-843c-89fc2dca89a8",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        620,
+        360
+      ],
+      "webhookId": "18dcf19b-4e6e-43e9-8dde-ca8ec9d55cf6"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const getMimeType = filename => ({\n    'jpg': 'image/jpeg', \n    'jpeg': 'image/jpeg',\n    'png': 'image/png', \n    'gif': 'image/gif',\n    'webp': 'image/webp',\n    'svg': 'image/svg+xml',\n    'bmp': 'image/bmp',\n    'ico': 'image/vnd.microsoft.icon',\n    'tiff': 'image/tiff',\n    'txt': 'text/plain', \n    'html': 'text/html',\n    'css': 'text/css',\n    'js': 'text/javascript',\n    'json': 'application/json',\n    'xml': 'application/xml',\n    'pdf': 'application/pdf',\n    'doc': 'application/msword',\n    'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',\n    'xls': 'application/vnd.ms-excel',\n    'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',\n    'ppt': 'application/vnd.ms-powerpoint',\n    'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',\n    'mp3': 'audio/mpeg',\n    'wav': 'audio/wav',\n    'mp4': 'video/mp4',\n    'avi': 'video/x-msvideo',\n    'mov': 'video/quicktime',\n    'zip': 'application/zip',\n    'rar': 'application/vnd.rar',\n    'tar': 'application/x-tar',\n    'gz': 'application/gzip',\n    '7z': 'application/x-7z-compressed'\n}[filename.split('.').pop().toLowerCase()] || 'application/octet-stream');\n\n\n$input.item.json.mimetype = getMimeType($input.item.json.filename)\n\n\nreturn $input.item;"
+      },
+      "id": "f7aadc4b-c60f-4696-b5ad-be991887cb31",
+      "name": "Detect Mimetype By Filename",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2820,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Start Typing",
+        "session": "={{ $('WAHA').item.json.waha.session }}",
+        "chatId": "={{ $('WAHA').item.json.waha.chatId }}",
+        "requestOptions": {}
+      },
+      "id": "f09af24a-4ea9-4cbe-8ba1-dfeb9337a385",
+      "name": "Typing...",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        2580,
+        460
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1.92
+      },
+      "id": "ec2212e6-3598-4f2f-aade-70fe72b3432f",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2820,
+        460
+      ],
+      "webhookId": "a1e8818d-53e5-404d-93d9-408e0ee22d7a"
+    },
+    {
+      "parameters": {
+        "content": "## Media",
+        "height": 616.3332818172848,
+        "width": 1159.7581794888124,
+        "color": 4
+      },
+      "id": "07c48fba-cc59-4b90-b9a9-fb6d3b467b07",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2097.163636363636,
+        -260
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Text",
+        "height": 616.3332818172848,
+        "width": 1159.7581794888124,
+        "color": 4
+      },
+      "id": "7854fae3-70a8-42fb-8c95-93416495bae2",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2100,
+        380
+      ]
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "body": {
+            "account": {
+              "id": 1,
+              "name": "WAHA"
+            },
+            "additional_attributes": {},
+            "content_attributes": {},
+            "content_type": "text",
+            "content": "фывафывафывафывафыва",
+            "conversation": {
+              "additional_attributes": {},
+              "can_reply": true,
+              "channel": "Channel::Api",
+              "contact_inbox": {
+                "id": 21,
+                "contact_id": 13,
+                "inbox_id": 1,
+                "source_id": "b1148575-c852-405b-8d88-94cbf89c1b5e",
+                "created_at": "2024-09-26T10:23:42.219Z",
+                "updated_at": "2024-09-26T10:27:01.009Z",
+                "hmac_verified": false,
+                "pubsub_token": "3YJi9wNbd3TRUcwgvYRPysmN"
+              },
+              "id": 16,
+              "inbox_id": 1,
+              "messages": [
+                {
+                  "id": 70,
+                  "content": "фывафывафывафывафыва",
+                  "account_id": 1,
+                  "inbox_id": 1,
+                  "conversation_id": 16,
+                  "message_type": 1,
+                  "created_at": 1727346749,
+                  "updated_at": "2024-09-26T10:32:29.612Z",
+                  "private": false,
+                  "status": "sent",
+                  "source_id": null,
+                  "content_type": "text",
+                  "content_attributes": {},
+                  "sender_type": "User",
+                  "sender_id": 1,
+                  "external_source_ids": {},
+                  "additional_attributes": {},
+                  "processed_message_content": "фывафывафывафывафыва",
+                  "sentiment": {},
+                  "conversation": {
+                    "assignee_id": 1,
+                    "unread_count": 0,
+                    "last_activity_at": 1727346749,
+                    "contact_inbox": {
+                      "source_id": "b1148575-c852-405b-8d88-94cbf89c1b5e"
+                    }
+                  },
+                  "attachments": [
+                    {
+                      "id": 2,
+                      "message_id": 70,
+                      "file_type": "file",
+                      "account_id": 1,
+                      "extension": null,
+                      "data_url": "https://chatwoot.devlike.pro/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--be44ca8b8d32ef4de810b9c73c6b99f81d5aba2b/n8n-community-nodes.png",
+                      "thumb_url": "https://chatwoot.devlike.pro/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--be44ca8b8d32ef4de810b9c73c6b99f81d5aba2b/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--a1565eecd557e906e37dd6d525ca3176b2f9f47f/n8n-community-nodes.png",
+                      "file_size": 46618,
+                      "width": null,
+                      "height": null
+                    }
+                  ],
+                  "sender": {
+                    "id": 1,
+                    "name": "WAHA",
+                    "available_name": "WAHA",
+                    "avatar_url": "",
+                    "type": "user",
+                    "availability_status": "online",
+                    "thumbnail": ""
+                  }
+                }
+              ],
+              "labels": [],
+              "meta": {
+                "sender": {
+                  "additional_attributes": {
+                    "city": "",
+                    "country": "",
+                    "description": "",
+                    "company_name": "",
+                    "country_code": "",
+                    "social_profiles": {
+                      "github": "",
+                      "twitter": "",
+                      "facebook": "",
+                      "linkedin": "",
+                      "instagram": ""
+                    }
+                  },
+                  "custom_attributes": {},
+                  "email": null,
+                  "id": 13,
+                  "identifier": null,
+                  "name": "SIM 2",
+                  "phone_number": "+79069571990",
+                  "thumbnail": "",
+                  "type": "contact"
+                },
+                "assignee": {
+                  "id": 1,
+                  "name": "WAHA",
+                  "available_name": "WAHA",
+                  "avatar_url": "",
+                  "type": "user",
+                  "availability_status": "online",
+                  "thumbnail": ""
+                },
+                "team": null,
+                "hmac_verified": false
+              },
+              "status": "open",
+              "custom_attributes": {},
+              "snoozed_until": null,
+              "unread_count": 0,
+              "first_reply_created_at": null,
+              "priority": null,
+              "waiting_since": 1727346222,
+              "agent_last_seen_at": 1727346749,
+              "contact_last_seen_at": 0,
+              "last_activity_at": 1727346749,
+              "timestamp": 1727346749,
+              "created_at": 1727346222
+            },
+            "created_at": "2024-09-26T10:32:29.612Z",
+            "id": 70,
+            "inbox": {
+              "id": 1,
+              "name": "WhatsApp - United Kingdom WAHA"
+            },
+            "message_type": "outgoing",
+            "private": false,
+            "sender": {
+              "id": 1,
+              "name": "WAHA",
+              "email": "waha@devlike.pro",
+              "type": "user"
+            },
+            "source_id": null,
+            "attachments": [
+              {
+                "id": 2,
+                "message_id": 70,
+                "file_type": "image",
+                "account_id": 1,
+                "extension": null,
+                "data_url": "https://chatwoot.devlike.pro/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--be44ca8b8d32ef4de810b9c73c6b99f81d5aba2b/n8n-community-nodes.png",
+                "thumb_url": "https://chatwoot.devlike.pro/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--be44ca8b8d32ef4de810b9c73c6b99f81d5aba2b/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--a1565eecd557e906e37dd6d525ca3176b2f9f47f/n8n-community-nodes.png",
+                "file_size": 46618,
+                "width": null,
+                "height": null
+              }
+            ],
+            "event": "message_created"
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "WAHA": {
+      "main": [
+        [
+          {
+            "node": "Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Body": {
+      "main": [
+        [
+          {
+            "node": "outgoing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "outgoing": {
+      "main": [
+        [
+          {
+            "node": "WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Attachments": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Attachments",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If Text",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Text": {
+      "main": [
+        [
+          {
+            "node": "Typing...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Send Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Voice",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File": {
+      "main": [
+        [
+          {
+            "node": "Detect Mimetype By Filename",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detect Mimetype By Filename": {
+      "main": [
+        [
+          {
+            "node": "Send File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typing...": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Send Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "91b0201d-7db1-45ef-bf23-a55f40250d5b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "7IgWepOCUHVGH8Xo",
+  "tags": []
+}
