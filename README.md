@@ -80,7 +80,7 @@ messages to WhatsApp via [n8n](https://n8n.io/).
 ## WhatsApp Chatwoot Integration
 <p align="center">
     <img 
-        src="./chatwoot/waha-chatwoot.png"
+        src="./chatwoot/screenshot.png"
         height=300
     />
 </p>

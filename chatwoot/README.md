@@ -3,8 +3,8 @@
 # ChatWoot WhatsApp Integration
 <p align="center">
     <img 
-        src="./waha-chatwoot.png"
-        height=300
+        src="./screenshot.png"
+        height=400
     />
 </p>
 
