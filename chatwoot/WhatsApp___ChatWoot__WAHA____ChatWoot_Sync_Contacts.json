@@ -1,0 +1,542 @@
+{
+  "name": "WhatsApp + ChatWoot: WAHA => ChatWoot Sync Contacts",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d3778c1f-3a1b-457f-946e-f0d9e7331cd4",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        560,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Contacts",
+        "operation": "Get All",
+        "session": "={{ $('WAHA').item.json.waha.session }}",
+        "requestOptions": {}
+      },
+      "id": "db26d1bc-cce8-40c7-b1b7-95e38dc70ae6",
+      "name": "Contacts",
+      "type": "@devlikeapro/n8n-nodes-waha.WAHA",
+      "typeVersion": 202409,
+      "position": [
+        1220,
+        360
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "XUpKLE96y6M8AYZc",
+          "name": "noweb-files"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f13a39ea-e0c6-43c7-8d68-26ecb1e4dee6",
+              "name": "waha.session",
+              "value": "chatwoot",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "95081a6c-7f76-4d30-9343-3ba2462cfa08",
+      "name": "WAHA",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        820,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f13a39ea-e0c6-43c7-8d68-26ecb1e4dee6",
+              "name": "chatwoot.accountId",
+              "value": "1",
+              "type": "string"
+            },
+            {
+              "id": "90de448a-8c1a-4a21-b2f6-dafb038c4ca2",
+              "name": "chatwoot.inboxId",
+              "value": "1",
+              "type": "string"
+            },
+            {
+              "id": "3aa84f3f-69b4-479e-8d8c-321752b635b6",
+              "name": "chatwoot.inboxIdentifier",
+              "value": "mzrVmNPDSgPd9PLg16cebDMX",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "bf40372a-2345-482d-bb17-f0b95d58fc8f",
+      "name": "ChatWoot",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ Settings",
+        "height": 370.73873110442463,
+        "width": 388.0031112314722
+      },
+      "id": "12199714-d720-470d-b6eb-856f2ba4c5a9",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        780,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Upsert Contact",
+        "height": 795.6900876520881,
+        "width": 1386.237376071128,
+        "color": 4
+      },
+      "id": "7b635700-7487-4e1a-a447-66c5fb16fbcd",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        -4.5621456961417834
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "237dbda9-1fdb-492c-8a08-0e9efeea83d6",
+      "name": "Loop",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1440,
+        360
+      ],
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "894d3758-81b8-4eb0-adb3-fa10c32bc676",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "fe6e44f2-7141-4223-a5b3-ff8a700e5839",
+      "name": "Contact",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1700,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "ad8a19f1-1e31-40bf-b865-5d3a09a98cbd",
+              "leftValue": "={{ $json }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d47d13c4-3d7d-4ad3-addc-18faf20151ff",
+      "name": "If Exists",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        2100,
+        380
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {},
+      "id": "5b2581be-1834-40f0-8165-5d8235013efc",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2260,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chatwoot_contacts",
+          "mode": "list",
+          "cachedResultName": "chatwoot_contacts"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session": "={{ $('WAHA').item.json.waha.session }}",
+            "chatid": "={{ $('Contact').item.json.id }}",
+            "chatwootinboxidentifier": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}",
+            "chatwootsourceid": "={{ $json.source_id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "session",
+              "displayName": "session",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chatid",
+              "displayName": "chatid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chatwootinboxidentifier",
+              "displayName": "chatwootinboxidentifier",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "chatwootsourceid",
+              "displayName": "chatwootsourceid",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ef92745d-8f1a-46bd-b9b3-ec9abf712f41",
+      "name": "Save Source Id",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        2760,
+        320
+      ],
+      "alwaysOutputData": false,
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "Contacts API",
+        "operation": "Create A Contact",
+        "inbox_identifier": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}",
+        "identifier": "={{ undefined }}",
+        "name": "={{ $('Loop').item.json.name }}",
+        "phone_number": "=+{{ $('Loop').item.json.id.split('@')[0] }}",
+        "requestOptions": {}
+      },
+      "id": "909b7360-9e00-4afe-bb87-98df11afe48d",
+      "name": "Create Contact",
+      "type": "@devlikeapro/n8n-nodes-chatwoot.chatWoot",
+      "typeVersion": 1,
+      "position": [
+        2460,
+        160
+      ],
+      "credentials": {
+        "chatwootApi": {
+          "id": "PVInLRsUs8KfH83F",
+          "name": "ChatWoot Inbox (WhatsApp - United Kingdom WAHA)"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "chatwoot_contacts",
+          "mode": "list",
+          "cachedResultName": "chatwoot_contacts"
+        },
+        "limit": 1,
+        "where": {
+          "values": [
+            {
+              "column": "session",
+              "value": "={{ $('WAHA').item.json.waha.session }}"
+            },
+            {
+              "column": "chatid",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "column": "chatwootinboxidentifier",
+              "value": "={{ $('ChatWoot').item.json.chatwoot.inboxIdentifier }}"
+            }
+          ]
+        },
+        "sort": {
+          "values": [
+            {
+              "column": "id",
+              "direction": "DESC"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8584a3cd-a3e3-418f-96b1-387433aa224a",
+      "name": "Get Contact",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        1920,
+        380
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "z5ykbQvjb4Nc1HqQ",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WAHA": {
+      "main": [
+        [
+          {
+            "node": "ChatWoot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ChatWoot": {
+      "main": [
+        [
+          {
+            "node": "Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contacts": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contact": {
+      "main": [
+        [
+          {
+            "node": "Get Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Exists": {
+      "main": [
+        [
+          {
+            "node": "Create Contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Source Id": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Contact": {
+      "main": [
+        [
+          {
+            "node": "Save Source Id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Contact": {
+      "main": [
+        [
+          {
+            "node": "If Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "085120d2-7543-4270-9203-c1e2b2a67f96",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6f24ea268994ae36b30ec537d02abd1ea604e9b986f06bb7e0e0ccb8309ddbc4"
+  },
+  "id": "FFWL16GRR7t5DSr2",
+  "tags": []
+}

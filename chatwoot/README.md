@@ -66,4 +66,7 @@ The workflow **receives** messages from WhatsApp via WAHA and sends them to Chat
 8. Paste it in your **WAHA** session webhook settings and configure to listen `message` events
 9. Send a test message from WhatsApp to see it in ChatWoot
 
+## 4. (optional) Sync WhatsApp contacts with ChatWoot
+
+[**template.json**](./WhatsApp___ChatWoot__WAHA____ChatWoot_Contacts.json)
 
