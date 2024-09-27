@@ -10,7 +10,10 @@ with
 to receive and send messages to WhatsApp via n8n.
 
 # How it works
-We'll guide you through the setup steps for each template.
+**n8n** receives messages from **ChatWoot** and sends them to **WhatsApp** via **WAHA**.
+And opposite, **n8n** receives messages from **WhatsApp** via **WAHA** and sends them to **ChatWoot**.
+
+For that you need to have few templates and set up steps, follow the guide below.
 
 ## Why not built-in ChatWoot WhatsApp integration?
 Every company has its own requirements and needs. 
