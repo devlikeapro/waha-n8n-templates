@@ -56,7 +56,7 @@ Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"**
 
 <hr>
 
-## [WhatsApp Typebot Integration](./whatsapp-typebot)
+## WhatsApp Typebot Integration
 
 <p align="center">
     <img 
@@ -72,7 +72,11 @@ Simple WhatsApp Bot template that replies with **"pong"** if received **"ping"**
 Integrate [Typebot](https://typebot.io/) with [Self-Hosted WhatsApp API (WAHA)](https://waha.devlike.pro) to send
 messages to WhatsApp via [n8n](https://n8n.io/).
 
-## [Send WhatsApp QR code for authorization to Email](./send-qr-code-to-email)
+[**Read more ->**](./whatsapp-typebot)
+
+<hr>
+
+## Send WhatsApp QR code for authorization to Email
 
 <p align="center">
     <img 
@@ -83,7 +87,11 @@ messages to WhatsApp via [n8n](https://n8n.io/).
 
 Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
 
-## [Send Bulk Messages API](./send-bulk-messages)
+[**Read more ->**](./send-qr-code-to-email)
+
+<hr>
+
+## Send Bulk Messages API
 
 <p align="center">
     <img 
@@ -94,7 +102,11 @@ Send **QR code** to **Email** when session it's in `SCAN_QR_CODE` status.
 
 Forward all WhatsApp incoming text messages to the Email.
 
-## [Forward WhatsApp text messages to email](./forward-all-text-messages-to-email)
+[**Read more ->**](./send-bulk-messages)
+
+<hr>
+
+## Forward WhatsApp text messages to email
 
 <p align="center">
     <img 
@@ -105,7 +117,11 @@ Forward all WhatsApp incoming text messages to the Email.
 
 Forward all WhatsApp incoming text messages to the Email.
 
-## [Fetch image, Rotate and Send it back](./fetch-image-rotate-and-send-it-back)
+[**Read more ->**](./forward-all-text-messages-to-email)
+
+<hr>
+
+## Fetch image, Rotate and Send it back
 
 <p align="center">
     <img 
@@ -114,7 +130,11 @@ Forward all WhatsApp incoming text messages to the Email.
     />
 </p>
 
-## [Send custom HTTP request to WAHA API](./send-custom-http-request-to-waha)
+[**Read more ->**](./fetch-image-rotate-and-send-it-back)
+
+<hr>
+
+## Send custom HTTP request to WAHA API
 
 <p align="center">
     <img 
@@ -125,11 +145,25 @@ Forward all WhatsApp incoming text messages to the Email.
 
 Template how to send custom HTTP request to WAHA API. It sends video message on incoming message with text "video".
 
-## [Restart server at midnight](./restart-server-at-midnight)
+[**Read more ->**](./send-custom-http-request-to-waha)
 
-Restart server at midnight
+<hr>
 
-## [WAHA Trigger Explanation](./waha-trigger-explanation)
+## Restart server at midnight
+<p align="center">
+    <img 
+        src="./restart-server-at-midnight/workflow.png"
+        height=400
+    />
+</p>
+
+Restart server at midnight.
+
+[**Read more ->**](./restart-server-at-midnight)
+
+<hr>
+
+## WAHA Trigger Explanation
 
 <p align="center">
     <img 
@@ -140,6 +174,10 @@ Restart server at midnight
 
 
 Explanation of **WAHA Trigger** node
+
+[**Read more ->**](./waha-trigger-explanation)
+
+<hr>
 
 # Contribute
 
