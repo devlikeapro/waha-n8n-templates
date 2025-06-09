@@ -88,6 +88,16 @@
                 "operation": "equals",
                 "name": "filter.operator.equals"
               }
+            },
+            {
+              "id": "81d466b4-47e6-45f9-9979-3455ea217073",
+              "leftValue": "={{ $json.body.private }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
             }
           ],
           "combinator": "and"
