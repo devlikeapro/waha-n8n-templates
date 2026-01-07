@@ -35,6 +35,7 @@ node.
   * [Send custom HTTP request to WAHA API](#send-custom-http-request-to-waha-api)
   * [Restart server at midnight](#restart-server-at-midnight)
   * [WAHA Trigger Explanation](#waha-trigger-explanation)
+  * [Send File using Binary N8N](#send-file-using-binary-n8n)
 - [Contribute](#contribute)
 
 <!-- tocstop -->
@@ -195,6 +196,15 @@ Restart server at midnight.
 Explanation of **WAHA Trigger** node
 
 [**Read more ->**](./waha-trigger-explanation)
+
+<hr>
+
+## Send File using Binary N8N
+
+This workflow downloads an image from a URL and sends it to WhatsApp using WAHA (WhatsApp HTTP API).
+It demonstrates how to handle binary data in n8n and send it via `multipart/form-data` to WAHA.
+
+[**Read more ->**](./send-file-using-binary-n8n)
 
 <hr>
 

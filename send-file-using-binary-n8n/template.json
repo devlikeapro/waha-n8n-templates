@@ -1,0 +1,154 @@
+{
+  "name": "Send File using Binary N8N",
+  "nodes": [
+    {
+      "parameters": {
+
+      },
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-384, -656],
+      "id": "613dfb5d-3d0d-4134-a2af-cb97b487d128",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"waha-api\":\"http://..../api/sendFile\",\n  \"chatId\": \"11111111@c.us\",\n  \"session\": \"default\",\n  \"X-Api-Key\": \"secret\"\n}\n",
+        "options": {
+
+        }
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-160, -656],
+      "id": "8b4622a7-cba8-480e-96e5-fdeb99dd07d7",
+      "name": "Variables for Connect Waha API",
+      "notesInFlow": true,
+      "notes": "Variables"
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/mininxd/n8n-nodes-split-waha/refs/heads/master/waha-n8n-workflow-example.png",
+        "options": {
+
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [96, -656],
+      "id": "597b48d1-acbb-4ce9-9a42-1780280cdc51",
+      "name": "get images",
+      "alwaysOutputData": true,
+      "notesInFlow": true,
+      "notes": "Download Images"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $node[\"Variables for Connect Waha API\"].json[\"waha-api\"] }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Api-Key",
+              "value": "={{ $node[\"Variables for Connect Waha API\"].json[\"X-Api-Key\"] }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "chatId",
+              "value": "={{ $node[\"Variables for Connect Waha API\"].json[\"chatId\"] }}"
+            },
+            {
+              "name": "session",
+              "value": "={{ $node[\"Variables for Connect Waha API\"].json[\"session\"] }}"
+            }
+          ]
+        },
+        "options": {
+
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [288, -656],
+      "id": "537b85f2-634f-490c-bb76-af0efe2b353c",
+      "name": "Send images to WAHA",
+      "executeOnce": false,
+      "notesInFlow": true,
+      "notes": "Send files using n8n binary "
+    },
+    {
+      "parameters": {
+        "content": "contains:\n Api Url, Api Key, chatId, session",
+        "height": 256,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [-240, -720],
+      "typeVersion": 1,
+      "id": "f384f54f-a09a-4624-baa7-56b688e235fa",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {
+
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Variables for Connect Waha API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Variables for Connect Waha API": {
+      "main": [
+        [
+          {
+            "node": "get images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get images": {
+      "main": [
+        [
+          {
+            "node": "Send images to WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "95469525-7879-4c21-8c97-71a7dcd5f139",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7bd99677709a35139bad8b31560fdf67f881234c864a93905a25eeeec0a9ca3a"
+  },
+  "id": "ViTrM3Q2rHJdJj6T",
+  "tags": []
+}
