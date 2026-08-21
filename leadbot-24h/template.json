@@ -1,0 +1,54 @@
+{
+  "name": "LeadBot 24h — AI WhatsApp Lead Qualification Bot (n8n AI Automations)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-webhook-free",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "id": "webhook-free-1",
+      "name": "WhatsApp Webhook"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"status\": \"received\", \"message\": \"Obrigado pelo contato! Em breve entraremos em contato.\"}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ],
+      "id": "respond-1",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "WhatsApp Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "meta": {
+    "instanceId": "leadbot-24h-public-template",
+    "author": "LeadBot 24h (https://planificador7.gumroad.com/l/leadbot-24h)",
+    "viral_footer": "Criado com LeadBot 24h — Atendimento 24h no WhatsApp sem mensalidade. Versão completa: https://planificador7.gumroad.com/l/leadbot-24h?utm_source=github&utm_medium=free_template&utm_campaign=leadbot24h&utm_content=lucaswalter-n8n-ai-automations"
+  }
+}
